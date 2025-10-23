@@ -2,7 +2,7 @@
 
 import {BNavbar} from "bootstrap-vue-3";
 </script>
-
+//i check git ned
 <template>
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info">
