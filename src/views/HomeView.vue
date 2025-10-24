@@ -2,9 +2,11 @@
 import DefaultLayout from "@/components/DefaultLayout.vue";
 import Carousel from "@/components/Carousel.vue";
 import { BButton } from "bootstrap-vue-3";
+import CarouselV2 from "@/components/CarouselV2.vue";
+
 
 export default {
-  components: { BButton, DefaultLayout, Carousel },
+  components: {CarouselV2, BButton, DefaultLayout, Carousel },
   data() {
     return {
       carouselPictures: [
@@ -63,12 +65,9 @@ export default {
               <br>Wir freuen uns darauf, Sie bei uns begrüßen zu dürfen!
             </p>
 
-
             <!-- Carousel -->
             <div class="mb-5">
-
-              <Carousel :pictures="carouselPictures" />
-
+              <CarouselV2 :pictures="carouselPictures" />
             </div>
 
             <!-- CTA Button -->
