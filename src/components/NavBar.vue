@@ -32,7 +32,7 @@ import {
 </template>
 
 <style scoped>
-/* 🌿 Dunkelgrün + Beige */
+/* Dunkelgrün + Beige */
 .navbar-custom {
   background-color: #2d4739 !important;
   color: #f5f5dc !important;

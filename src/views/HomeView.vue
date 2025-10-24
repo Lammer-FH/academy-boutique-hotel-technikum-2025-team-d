@@ -1,12 +1,11 @@
 <script>
 import DefaultLayout from "@/components/DefaultLayout.vue";
-import Carousel from "@/components/Carousel.vue";
 import { BButton } from "bootstrap-vue-3";
 import CarouselV2 from "@/components/CarouselV2.vue";
 
 
 export default {
-  components: {CarouselV2, BButton, DefaultLayout, Carousel },
+  components: {CarouselV2, BButton, DefaultLayout },
   data() {
     return {
       carouselPictures: [
@@ -18,7 +17,7 @@ export default {
 
   },
   mounted() {
-    console.log('✅ Bilder im Parent:', this.carouselPictures)
+    console.log('Bilder im Parent:', this.carouselPictures)
   }
 };
 </script>
