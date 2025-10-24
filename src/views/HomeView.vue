@@ -10,9 +10,9 @@ export default {
   data() {
     return {
       carouselPictures: [
-        'https://picsum.photos/1024/480?random=1',
-        'https://picsum.photos/1024/480?random=2',
-        'https://picsum.photos/1024/480?random=3',
+        '/images/roomImages/room1.jpeg',
+        '/images/roomImages/room2.jpeg',
+        '/images/roomImages/room3.jpeg',
       ],
     };
 
@@ -37,7 +37,7 @@ export default {
 
             <!-- Hero Image -->
             <img
-                src="https://picsum.photos/1024/480"
+                src='/images/Hotel/HotelAußen.jpg'
                 class="img-fluid rounded shadow mb-5 hero-img"
                 alt="Hotelbild"
             />
@@ -64,6 +64,10 @@ export default {
               Buchen Sie jetzt Ihr Zimmer und sichern Sie sich die besten Raten.
               <br>Wir freuen uns darauf, Sie bei uns begrüßen zu dürfen!
             </p>
+
+            <h2 class="display-6 fw-bold mb-4  text-hero">
+              Unsere Zimmer:
+            </h2>
 
             <!-- Carousel -->
             <div class="mb-5">

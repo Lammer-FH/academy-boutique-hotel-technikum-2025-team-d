@@ -129,7 +129,7 @@ import DefaultLayout from "@/components/DefaultLayout.vue";
           <div class="text-center mt-5 py-4 border-top">
             <p class="text-muted mb-2"><strong>Stand:</strong> Oktober 2025</p>
             <div class="alert alert-warning" role="alert">
-              <strong>⚠️ Hinweis:</strong> Dies ist ein <strong>fiktives Impressum</strong> für ein Schulprojekt.
+              <strong>⚠️ Hinweis:</strong> Dies ist ein <strong>fiktives Impressum</strong>.
               Die Firmenbuchnummer, UID-Nummer und der Geschäftsführer sind erfunden!
             </div>
           </div>
