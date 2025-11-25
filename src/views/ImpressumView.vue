@@ -1,6 +1,6 @@
 <script setup>
 import { BContainer, BRow, BCol, BCard } from 'bootstrap-vue-3'
-import DefaultLayout from "@/components/DefaultLayout.vue";
+import DefaultLayout from "@/components/base/DefaultLayout.vue";
 </script>
 
 <template>

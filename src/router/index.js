@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import NavBar from "@/components/NavBar.vue";
-import DefaultLayout from "@/components/DefaultLayout.vue";
+import DefaultLayout from "@/components/base/DefaultLayout.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

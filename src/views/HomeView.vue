@@ -1,7 +1,7 @@
 <script>
-import DefaultLayout from "@/components/DefaultLayout.vue";
+import DefaultLayout from "@/components/base/DefaultLayout.vue";
 import {BButton} from "bootstrap-vue-3";
-import CarouselV2 from "@/components/CarouselV2.vue";
+import CarouselV2 from "@/components/base/CarouselV2.vue";
 
 
 export default {
