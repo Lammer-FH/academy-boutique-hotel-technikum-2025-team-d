@@ -1,10 +1,13 @@
 <script setup>
 import {RouterLink, RouterView} from 'vue-router'
 import NavBar from "@/components/NavBar.vue";
+import RoomListComponent from "@/components/room/RoomListComponent.vue";
 </script>
 
 <template>
   <RouterView/>
+
+  <RoomListComponent/>
 </template>
 
 <style scoped>

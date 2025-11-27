@@ -2,10 +2,18 @@
 import DefaultLayout from "@/components/base/DefaultLayout.vue";
 import {BButton} from "bootstrap-vue-3";
 import CarouselV2 from "@/components/base/CarouselV2.vue";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import {faHouse} from "@fortawesome/free-solid-svg-icons";
+import RoomCardComponent from "@/components/room/RoomCardComponent.vue";
 
 
 export default {
-  components: {CarouselV2, BButton, DefaultLayout},
+  methods: {
+    faHouse() {
+      return faHouse
+    }
+  },
+  components: {FontAwesomeIcon, CarouselV2, BButton, DefaultLayout, RoomCardComponent},
   data() {
     return {
       carouselPictures: [
@@ -33,6 +41,7 @@ export default {
             Boutique Hotel Technikum
           </h1>
 
+          <RoomCardComponent/>
 
           <b-img
               src='/images/Hotel/HotelAußen.jpg'
