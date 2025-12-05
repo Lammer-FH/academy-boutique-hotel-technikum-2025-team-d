@@ -6,9 +6,7 @@ import { BContainer, BRow, BCol, BCard } from "bootstrap-vue-3";
 <template>
   <DefaultLayout>
     <section class="about-section py-5">
-      <b-container>
-        <b-row>
-          <b-col lg="10" xl="8" class="mx-auto">
+
             <div class="text-center mb-5">
               <h1 class="display-5 fw-bold text-uppercase text-title">Über Uns</h1>
               <p class="lead text-muted">Wer wir sind und was uns ausmacht</p>
@@ -47,9 +45,7 @@ import { BContainer, BRow, BCol, BCard } from "bootstrap-vue-3";
             <div class="text-center mt-5 fst-italic text-quote">
               „Bei uns sind Sie nicht nur Gast – Sie sind Teil einer Geschichte, die mit jeder Übernachtung wächst.“
             </div>
-          </b-col>
-        </b-row>
-      </b-container>
+
     </section>
   </DefaultLayout>
 </template>

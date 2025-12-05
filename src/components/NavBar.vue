@@ -20,7 +20,9 @@ import {
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <router-link to="/about" class="nav-link-custom">Über Uns</router-link>
+          <b-link href="#">
+            <router-link  to="/about" class="nav-link-custom">Über Uns</router-link>
+          </b-link>
         </b-navbar-nav>
 
         <b-navbar-nav class="ms-auto">

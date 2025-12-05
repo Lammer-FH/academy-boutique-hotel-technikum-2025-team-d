@@ -6,9 +6,7 @@ import DefaultLayout from "@/components/base/DefaultLayout.vue";
 <template>
   <DefaultLayout>
   <div class="impressum-page">
-    <b-container class="py-5">
-      <b-row>
-        <b-col lg="10" xl="8" class="mx-auto">
+
           <!-- Header -->
           <div class="text-center mb-5">
             <h1 class="display-4 mb-3">Impressum</h1>
@@ -133,9 +131,7 @@ import DefaultLayout from "@/components/base/DefaultLayout.vue";
               Die Firmenbuchnummer, UID-Nummer und der Geschäftsführer sind erfunden!
             </div>
           </div>
-        </b-col>
-      </b-row>
-    </b-container>
+
   </div>
   </DefaultLayout>
 </template>

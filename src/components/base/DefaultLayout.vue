@@ -9,8 +9,14 @@ import NavBar from "@/components/NavBar.vue";
     <NavBar />
 
     <!-- Hauptinhalt -->
-    <main class="flex-fill">
+    <main class="flex-fill mt-50">
+      <b-container class="home-hero py-5">
+        <b-row>
+          <b-col cols="12" lg="8" class="mx-auto text-center">
       <slot/>
+          </b-col>
+        </b-row>
+      </b-container>
     </main>
 
     <!-- Footer unten -->
@@ -19,7 +25,9 @@ import NavBar from "@/components/NavBar.vue";
 </template>
 
 <style scoped>
-main {
-  padding-top: 70px; /* Platz, falls Navbar fixed ist */
+
+.mt-50 {
+  margin-top: 50px !important;
 }
+
 </style>

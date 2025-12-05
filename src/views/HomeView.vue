@@ -4,7 +4,6 @@ import {BButton} from "bootstrap-vue-3";
 import CarouselV2 from "@/components/base/CarouselV2.vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {faHouse} from "@fortawesome/free-solid-svg-icons";
-import RoomCardComponent from "@/components/room/RoomCardComponent.vue";
 
 
 export default {
@@ -13,13 +12,13 @@ export default {
       return faHouse
     }
   },
-  components: {FontAwesomeIcon, CarouselV2, BButton, DefaultLayout, RoomCardComponent},
+  components: {FontAwesomeIcon, CarouselV2, BButton, DefaultLayout},
   data() {
     return {
       carouselPictures: [
-        '/images/roomImages/room1.jpeg',
-        '/images/roomImages/room2.jpeg',
-        '/images/roomImages/room3.jpeg',
+        '/images/Boutique-Hotel-Rooms/Boutique-Hotel-Rooms-1.jpg',
+        '/images/Boutique-Hotel-Rooms/Boutique-Hotel-Rooms-2.jpg',
+        '/images/Boutique-Hotel-Rooms/Boutique-Hotel-Rooms-3.jpg',
       ],
     };
 
@@ -28,20 +27,16 @@ export default {
     console.log('Bilder im Parent:', this.carouselPictures)
   }
 };
+
 </script>
 
 <template>
   <DefaultLayout>
-    <b-container class="home-hero py-5">
-      <b-row>
-        <b-col cols="12" lg="8" class="mx-auto text-center">
 
 
           <h1 class="display-4 fw-bold mb-4 text-hero">
             Boutique Hotel Technikum
           </h1>
-
-          <RoomCardComponent/>
 
           <b-img
               src='/images/Hotel/HotelAußen.jpg'
@@ -88,13 +83,11 @@ export default {
           </b-container>
 
 
-          <b-button variant="light" size="lg" class="cta-button px-4 py-2">
-            Jetzt Zimmer ansehen
+          <b-button href="#" variant="light" size="lg" class="cta-button px-4 py-2">
+            <router-link  to="/rooms" class="nav-link-custom">Jetzt Zimmer ansehen</router-link>
           </b-button>
 
-        </b-col>
-      </b-row>
-    </b-container>
+
 
   </DefaultLayout>
 </template>

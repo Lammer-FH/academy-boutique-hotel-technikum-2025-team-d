@@ -6,8 +6,6 @@ import RoomListComponent from "@/components/room/RoomListComponent.vue";
 
 <template>
   <RouterView/>
-
-  <RoomListComponent/>
 </template>
 
 <style scoped>
