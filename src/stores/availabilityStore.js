@@ -7,7 +7,7 @@ const apiUrl = "https://boutique-hotel.helmuth-lammer.at/api/v1"
 export const useAvailabilityStore = defineStore('RoomAvailabilityStore', {
     //Überprüfen: Braucht man State isAvailable?
     state: () => ({
-        isAvailable: null ,
+        availability: {} ,
     }),
     actions: {
         loadState(roomId, startDate, endDate) {
@@ -17,17 +17,20 @@ export const useAvailabilityStore = defineStore('RoomAvailabilityStore', {
                     console.log(responseData)
 
                     if (responseData.available === true) {
-                        this.isAvailable = true;
+                        this.availability[roomId] = true;
                     } else {
-                        this.isAvailable = false;
+                        this.availability[roomId] = false;
                     }
-                    console.log(this.isAvailable);
+                    console.log(this.availability[roomId]);
 
                 })
                 .catch(error => {
                     console.error('Fehler:', error);
                     //this.isAvailable = false;
                 });
+        },
+        reset() {
+            this.availability = {};
         }
     }
 })

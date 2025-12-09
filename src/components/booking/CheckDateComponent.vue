@@ -24,20 +24,34 @@ export default {
   },
   created() {
     //Instanzierung des Stores beim Laden er Komponente
+    this.datesValid = null;
+    this.startDate = null;
+    this.endDate = null;
     this.store = useAvailabilityStore();
+
   },
 
+  watch: {
+    startDate() {
+      this.resetUI();
+    },
+    endDate() {
+      this.resetUI();
+    }
+  },
 
   methods: {
     //muss augelöst werden -> Button
     checkAvailability() {
+      //this.datesValid = null;
       this.validateInputs();
       if (this.datesValid) {
         this.store.loadState(this.roomId, this.startDate, this.endDate)
       }
-
     },
+
     validateInputs() {
+      this.datesValid = null;
       if (!this.startDate || !this.endDate) {
         this.datesValid = false;
         return;
@@ -48,20 +62,25 @@ export default {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
 
-      if (startDate < today || endDate < startDate) {
+      if (startDate < today || endDate <= startDate ) {
         this.datesValid = false;
         return;
       }
 
       this.datesValid = true;
     },
+
+    resetUI() {
+      this.store.reset();     // Verfügbarkeit zurücksetzen
+      this.datesValid = null; // Validierung zurücksetzen
+    }
   },
 
   computed: {
 //wenn sich state im store ändert wird isAvailable() automatisch ausgeführt und GUI neu gezeichnet
     isAvailable() {
-      return this.store.isAvailable;
-    }
+      return this.store.availability[this.roomId] ?? null
+    },
   }
 }
 
@@ -93,16 +112,20 @@ export default {
           />
         </b-col>
       </b-row>
-      <b-button variant="primary" @click="checkAvailability">Reisedaten bestätigen</b-button>
-      <div v-if="isAvailable !== null">
+      <div v-if="datesValid != null && !datesValid">
+        <p class="errorText">Bitte gültige Daten eingeben</p>
+      </div>
+      <div v-if="isAvailable !== null && startDate !== null && endDate !== null">
         <div v-if="isAvailable">
           <p>Zimmer verfügbar</p>
-          <b-button>Jetzt buchen</b-button>
         </div>
         <div v-else>
-          <p>Leider nicht verfügbar</p>
+          <p class="errorText">Das Zimmer ist im gewählten Zeitraum leider nicht verfügbar</p>
         </div>
       </div>
+      <b-button variant="primary" v-if="isAvailable == null || !isAvailable || !datesValid" @click="checkAvailability">Reisedaten bestätigen</b-button>
+      <b-button variant="success" v-else @click="bookRoom">Jetzt buchen</b-button>
+
     </b-container>
   </div>
 
@@ -113,4 +136,9 @@ export default {
   background-color: lightgray;
   padding: 20px;
 }
+.errorText {
+  color: red;
+}
+
+
 </style>

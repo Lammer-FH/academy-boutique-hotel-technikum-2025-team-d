@@ -2,7 +2,7 @@
 import { BCard, BCardBody, BCardImg, BCardText, BCol, BRow } from "bootstrap-vue-3";
 import RoomExtraComponent from "@/components/room/RoomExtraComponent.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import CheckDateComponent from "@/components/booking/CheckDateComponent.vue";
+
 
 
 export default {
@@ -14,23 +14,17 @@ export default {
     },
   },
   components: {
-    CheckDateComponent,
     FontAwesomeIcon,
     RoomExtraComponent,
     BCard, BCardBody, BCardImg, BCardText, BCol, BRow
   },
   data() {
     return {
-      //CheckDateComponentIsVisible: false,
+
     }
   },
 
-  methods: {
-    showCheckDateComponent() {
-      this.CheckDateComponentIsVisible = !this.CheckDateComponentIsVisible
-      console.log('CheckDateComponentIsVisible =', this.CheckDateComponentIsVisible)
-    }
-  },
+
 
 }
 </script>
@@ -68,9 +62,7 @@ export default {
       <b-button variant="primary" @click="$emit('check', room.id)">
         Verfügbarkeit prüfen
       </b-button>
-      <!--
-      <CheckDateComponent v-if="CheckDateComponentIsVisible"/>
-      -->
+
     </b-card>
 
   </div>
