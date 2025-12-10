@@ -1,7 +1,7 @@
 <script setup>
 
 import DefaultLayout from "@/components/base/DefaultLayout.vue";
-import checkDateComponent from "@/components/booking/CheckDateComponent.vue";
+import checkDateComponent from "@/components/room/CheckDateComponent.vue";
 </script>
 
 <template>

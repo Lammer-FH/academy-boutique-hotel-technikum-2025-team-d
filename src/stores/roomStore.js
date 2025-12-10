@@ -10,7 +10,7 @@ export const useRoomStore = defineStore('RoomStore', {
     }),
     actions: {
         loadState() {
-            axios.get(apiUrl + "/rooms")
+           return axios.get(apiUrl + "/rooms")
                 .then(response => {
                     this.roomsList = response.data.map(room => {
                         // 1. Nur Extras mit Wert 1 behalten
@@ -38,6 +38,9 @@ export const useRoomStore = defineStore('RoomStore', {
                 .catch(error => {
                     console.error('Fehler:', error);
                 });
+        },
+        getRoomById(roomId) {
+            return this.roomsList.find(room => room.id === roomId);
         }
     }
 })

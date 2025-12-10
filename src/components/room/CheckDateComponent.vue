@@ -62,7 +62,7 @@ export default {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
 
-      if (startDate < today || endDate <= startDate ) {
+      if (startDate < today || endDate <= startDate) {
         this.datesValid = false;
         return;
       }
@@ -123,8 +123,18 @@ export default {
           <p class="errorText">Das Zimmer ist im gewählten Zeitraum leider nicht verfügbar</p>
         </div>
       </div>
-      <b-button variant="primary" v-if="isAvailable == null || !isAvailable || !datesValid" @click="checkAvailability">Reisedaten bestätigen</b-button>
-      <b-button variant="success" v-else @click="bookRoom">Jetzt buchen</b-button>
+      <b-button variant="primary" v-if="isAvailable == null || !isAvailable || !datesValid" @click="checkAvailability">
+        Reisedaten bestätigen
+      </b-button>
+      <b-button variant="success" v-else>
+        <RouterLink :to="{name: 'booking',
+query: {
+        roomId: roomId,
+        startDate: startDate,
+        endDate: endDate}
+}">Jetzt buchen
+        </RouterLink>
+      </b-button>
 
     </b-container>
   </div>
@@ -136,6 +146,7 @@ export default {
   background-color: lightgray;
   padding: 20px;
 }
+
 .errorText {
   color: red;
 }
