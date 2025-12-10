@@ -89,7 +89,7 @@ export default {
 
 <template>
   <div>
-    <b-container class="mt-120 mb-5 bg-color">
+    <b-container class="mt-120 mb-5 bg-color rounded">
       <b-row>
         <b-col cols="12" md="6">
           <label for="startDate" class="form-label">Anreise</label>
