@@ -40,14 +40,7 @@ export default {
 
   computed: {
     roomsListWithImagesAndDescriptions() {
-      return useRoomStore().roomsList.map((room) => {
-        const localData = roomLocalData[room.id] || {};
-        return {
-          ...room,
-          image: localData.image || "/images/roomImages/room1.jpeg",
-          description: localData.description || "Keine Beschreibung verfügbar",
-        }
-      })
+      return useRoomStore().roomsList
     },
 
     rows() {

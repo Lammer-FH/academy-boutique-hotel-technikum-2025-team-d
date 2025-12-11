@@ -1,5 +1,6 @@
 import {defineStore} from 'pinia'
 import axios from "axios";
+import {roomLocalData} from "@/components/room/roomLocalData";
 
 
 const apiUrl = "https://boutique-hotel.helmuth-lammer.at/api/v1"
@@ -28,10 +29,13 @@ export const useRoomStore = defineStore('RoomStore', {
                                 filteredExtras.push(extra);
                             }
                         }
+                        const localData = roomLocalData[room.id] || {};
 
                         return {
                             ...room,
-                            extras: filteredExtras
+                            extras: filteredExtras,
+                            image: localData.image || "/images/roomImages/room1.jpeg",
+                            description: localData.description || "Keine Beschreibung verfügbar",
                         };
                     });
                 })

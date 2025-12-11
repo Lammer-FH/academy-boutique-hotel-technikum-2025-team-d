@@ -12,6 +12,10 @@ export default {
       type: Object,
       required: true,
     },
+    showButton: {
+      type: Boolean,
+      default: true
+    }
   },
   components: {
     FontAwesomeIcon,
@@ -59,7 +63,7 @@ export default {
         </b-col>
       </b-row>
 
-      <b-button variant="primary" @click="$emit('check', room.id)">
+      <b-button v-if="showButton" variant="primary" @click="$emit('check', room.id)">
         Verfügbarkeit prüfen
       </b-button>
 
