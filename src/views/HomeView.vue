@@ -32,61 +32,58 @@ export default {
 
 <template>
   <DefaultLayout>
+    <h1 class="display-4 fw-bold mb-4 text-hero">
+      Boutique Hotel Technikum
+    </h1>
+
+    <b-img
+        src='/images/Hotel/HotelAußen.jpg'
+        fluid
+        rounded
+        class="shadow mb-5 hero-img"
+        alt="Hotelbild"
+    />
 
 
-          <h1 class="display-4 fw-bold mb-4 text-hero">
-            Boutique Hotel Technikum
-          </h1>
+    <p class="lead mb-5 text-intro text-justified">
+      <strong>Willkommen im Boutique Hotel Technikum!</strong><br>
+      Erleben Sie modernen Komfort im Herzen Wiens. Unser charmantes Boutique-Hotel verbindet
+      zeitgenössisches Design mit herzlicher österreichischer Gastfreundschaft.
+      <br>
+      Ob Geschäftsreise oder Städtetrip – bei uns finden Sie Ihren perfekten Rückzugsort in der pulsierenden
+      Stadt.
+    </p>
 
-          <b-img
-              src='/images/Hotel/HotelAußen.jpg'
-              fluid
-              rounded
-              class="shadow mb-5 hero-img"
-              alt="Hotelbild"
-          />
+    <p class="lead mb-5 text-intro text-justified">
+      <strong>Ihr Zuhause in Wien:</strong><br>
+      Das Boutique Hotel Technikum liegt im aufstrebenden 20. Bezirk, nur wenige Minuten von der Innenstadt
+      entfernt.
+      In unseren stilvoll eingerichteten Zimmern erwarten Sie modernste Annehmlichkeiten, bequeme Betten und ein
+      Service, der keine Wünsche offen lässt. Unser Team steht Ihnen rund um die Uhr zur Verfügung, um Ihren
+      Aufenthalt
+      unvergesslich zu machen.
+    </p>
 
-
-          <p class="lead mb-5 text-intro text-justified">
-            <strong>Willkommen im Boutique Hotel Technikum!</strong><br>
-            Erleben Sie modernen Komfort im Herzen Wiens. Unser charmantes Boutique-Hotel verbindet
-            zeitgenössisches Design mit herzlicher österreichischer Gastfreundschaft.
-            <br>
-            Ob Geschäftsreise oder Städtetrip – bei uns finden Sie Ihren perfekten Rückzugsort in der pulsierenden
-            Stadt.
-          </p>
-
-          <p class="lead mb-5 text-intro text-justified">
-            <strong>Ihr Zuhause in Wien:</strong><br>
-            Das Boutique Hotel Technikum liegt im aufstrebenden 20. Bezirk, nur wenige Minuten von der Innenstadt
-            entfernt.
-            In unseren stilvoll eingerichteten Zimmern erwarten Sie modernste Annehmlichkeiten, bequeme Betten und ein
-            Service, der keine Wünsche offen lässt. Unser Team steht Ihnen rund um die Uhr zur Verfügung, um Ihren
-            Aufenthalt
-            unvergesslich zu machen.
-          </p>
-
-          <p class="lead mb-5 text-intro text-justified">
-            <strong>Bereit für Ihr Wien-Erlebnis?</strong><br>
-            Buchen Sie jetzt Ihr Zimmer und sichern Sie sich die besten Raten.
-            <br>Wir freuen uns darauf, Sie bei uns begrüßen zu dürfen!
-          </p>
+    <p class="lead mb-5 text-intro text-justified">
+      <strong>Bereit für Ihr Wien-Erlebnis?</strong><br>
+      Buchen Sie jetzt Ihr Zimmer und sichern Sie sich die besten Raten.
+      <br>Wir freuen uns darauf, Sie bei uns begrüßen zu dürfen!
+    </p>
 
 
-          <h2 class="display-6 fw-bold mb-4 text-hero">
-            Unsere Zimmer:
-          </h2>
+    <h2 class="display-6 fw-bold mb-4 text-hero">
+      Unsere Zimmer:
+    </h2>
 
 
-          <b-container class="mb-5">
-            <CarouselV2 :pictures="carouselPictures"/>
-          </b-container>
+    <b-container class="mb-5">
+      <CarouselV2 :pictures="carouselPictures"/>
+    </b-container>
 
 
-          <b-button href="#" variant="light" size="lg" class="cta-button px-4 py-2">
-            <router-link  to="/rooms" class="nav-link-custom">Jetzt Zimmer ansehen</router-link>
-          </b-button>
-
+    <b-button href="#" variant="light" size="lg" class="cta-button px-4 py-2">
+      <router-link class="cta-button" to="/rooms">Jetzt Zimmer ansehen</router-link>
+    </b-button>
 
 
   </DefaultLayout>
@@ -123,14 +120,13 @@ export default {
   background-color: #2d4739 !important;
   color: #f5f5dc !important;
   border: none !important;
-  border-radius: 50px;
   font-weight: 500;
   transition: all 0.3s ease;
 }
 
 .cta-button:hover {
-  background-color: #d4af37 !important;
-  color: #2d4739 !important;
+  background-color: #6A947D !important;
+  color: #f5f5dc !important;
 }
 
 /* Text Blocksatz */

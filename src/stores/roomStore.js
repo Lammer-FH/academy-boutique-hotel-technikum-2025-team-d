@@ -7,7 +7,7 @@ const apiUrl = "https://boutique-hotel.helmuth-lammer.at/api/v1"
 
 export const useRoomStore = defineStore('RoomStore', {
     state: () => ({
-        roomsList: [],
+        roomsList: JSON.parse(localStorage.getItem('roomsList') || '[]') //roomsList: [],
     }),
     actions: {
         loadState() {
@@ -29,6 +29,7 @@ export const useRoomStore = defineStore('RoomStore', {
                                 filteredExtras.push(extra);
                             }
                         }
+                        //Lokale Daten (Beschreibung + Bild) hinzufügen
                         const localData = roomLocalData[room.id] || {};
 
                         return {
@@ -38,6 +39,8 @@ export const useRoomStore = defineStore('RoomStore', {
                             description: localData.description || "Keine Beschreibung verfügbar",
                         };
                     });
+                    // ggf löschen
+                    localStorage.setItem('roomsList', JSON.stringify(this.roomsList));
                 })
                 .catch(error => {
                     console.error('Fehler:', error);

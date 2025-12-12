@@ -1,9 +1,3 @@
-//TO DO und aktueller Stand
-//Recherchieren: Wie funktioniert Router mit Parametern und wo/wie holt man sich die Parameter in der Komponente aus der URL (roomId)
-//Validierungen
-//Check: in welchem Format kommend die Daten aus dem Datepicker zurück? Wie transformieren?
-//Verfügbarkeit prüfen ev unter RoomCard und nicht als eigene Seite? erst Buchung eigene Seite?
-
 <script>
 import {BContainer} from "bootstrap-vue-3";
 import {useAvailabilityStore} from "@/stores/availabilityStore";
@@ -42,9 +36,7 @@ export default {
   },
 
   methods: {
-    //muss augelöst werden -> Button
     checkAvailability() {
-      //this.datesValid = null;
       this.validateInputs();
       if (this.datesValid) {
         this.store.loadState(this.roomId, this.startDate, this.endDate)
@@ -59,6 +51,7 @@ export default {
     },
     bookNow(){
       this.updateBookingDataState()
+      this.$emit('close')
       this.$router.push("/booking");
     },
 
@@ -83,8 +76,11 @@ export default {
     },
 
     resetUI() {
-      this.store.reset();     // Verfügbarkeit zurücksetzen
-      this.datesValid = null; // Validierung zurücksetzen
+      this.store.reset();
+      this.datesValid = null;
+    },
+    closeRooms() {
+      this.$emit('close')
     }
   },
 
@@ -135,10 +131,11 @@ export default {
           <p class="errorText">Das Zimmer ist im gewählten Zeitraum leider nicht verfügbar</p>
         </div>
       </div>
-      <b-button variant="primary" v-if="isAvailable == null || !isAvailable || !datesValid" @click="checkAvailability">
+
+      <b-button class="cta-button" variant="primary" v-if="isAvailable == null || !isAvailable || !datesValid" @click="checkAvailability">
         Reisedaten bestätigen
       </b-button>
-      <b-button variant="success" v-else @click="bookNow">Jetzt buchen</b-button>
+      <b-button class="cta-button" variant="success" v-else @click="bookNow" @confirm="closeRooms">Zimmer wählen</b-button>
 
     </b-container>
   </div>
@@ -155,5 +152,16 @@ export default {
   color: red;
 }
 
+.cta-button {
+  background-color: #2d4739 !important;
+  color: #f5f5dc !important;
+  border: none !important;
+  transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #6A947D !important;
+  color: #f5f5dc !important;
+}
 
 </style>

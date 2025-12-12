@@ -26,7 +26,6 @@ export const useAvailabilityStore = defineStore('RoomAvailabilityStore', {
                 })
                 .catch(error => {
                     console.error('Fehler:', error);
-                    //this.isAvailable = false;
                 });
         },
         reset() {

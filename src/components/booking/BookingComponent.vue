@@ -5,14 +5,15 @@ import RoomCardComponent from "@/components/room/RoomCardComponent.vue";
 import {BRow} from "bootstrap-vue-3";
 import {useBookingDataStore} from "@/stores/bookingDataStore";
 import BookingDetailsConfirmation from "@/components/booking/BookingDetailsConfirmation.vue";
-import RoomListComponent from "@/components/room/RoomListComponent.vue";
+import BookingRoomList from "@/components/booking/BookingRoomList.vue";
+
 
 export default {
   name: "BookingComponent",
-  components: {RoomListComponent, BRow, RoomCardComponent, BookingForm, BookingDetailsConfirmation,},
+  components: {BookingRoomList, BRow, RoomCardComponent, BookingForm, BookingDetailsConfirmation,},
   data() {
     return {
-      //bookingData: useBookingDataStore(),
+      bookingData: useBookingDataStore(),
       showRooms: false,
     }
   },
@@ -26,23 +27,12 @@ export default {
   methods: {
     editRoomOrDate(){
       this.showRooms = true;
-    }
+    },
   },
   computed: {
     room() {
       return this.roomStore.getRoomById(this.bookingData.roomId);
     },
-    totalPrice() {
-      if (!this.room) {
-        return 0;
-      }
-      let total = this.room.pricePerNight * this.bookingData.nights
-      this.bookingData.setTotalPrice(total);
-    },
-    bookingData() {
-      return useBookingDataStore();
-    },
-
   }
 }
 
@@ -52,7 +42,6 @@ export default {
   <!--
   <pre>{{ bookingData }}</pre>
   -->
-<h1>Ihre Buchung</h1>
   <b-row>
     <b-col cols="12" md="6">
       <div align="left">
@@ -60,20 +49,34 @@ export default {
         <p>Aufenthalt: {{bookingData.nights}} Nächte</p>
         <p v-if="room">Von {{new Date (bookingData.startDate).toLocaleDateString("de-De")}} bis {{new Date(bookingData.endDate).toLocaleDateString("de-DE")}}</p>
         <p v-if="room">Gesamtpreis: EUR {{bookingData.totalPrice}}.-</p>
-        <b-button variant="primary" @click="editRoomOrDate">Bearbeiten</b-button>
+        <b-button class="cta-button" variant="primary" @click="editRoomOrDate" href="#roomsList">Bearbeiten</b-button>
       </div>
       <BookingForm/>
     </b-col>
-    <b-col cols="12" md="6">
+    <b-col id="change-room" cols="12" md="6">
       <RoomCardComponent v-if="room" :room="room" :show-button="false"/>
     </b-col>
   </b-row>
-  <b-row v-if="showRooms">
-    <RoomListComponent/>
+
+  <b-row v-if="showRooms" id="roomsList">
+    <BookingRoomList @close="showRooms = false"/>
   </b-row>
+
 
 </template>
 
 <style scoped>
+
+.cta-button {
+  background-color: #2d4739 !important;
+  color: #f5f5dc !important;
+  border: none !important;
+  transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #6A947D !important;
+  color: #f5f5dc !important;
+}
 
 </style>

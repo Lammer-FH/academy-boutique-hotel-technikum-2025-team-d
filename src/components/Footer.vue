@@ -22,12 +22,12 @@ export default {
         <b-col cols="auto" md="4" class="text-left mb-4 mb-md-0">
           <h5 class="footer-heading">Wichtige Links</h5>
           <ul class="list-unstyled ms-2">
-            <li href="#">
+        <li href="#">
               <router-link to="/about" class="footer-link">Über Uns</router-link>
-            </li>
+        </li>
             <li href="#">
               <router-link  to="/impressum" class="footer-link">Impressum</router-link>
-            </li>
+          </li>
           </ul>
         </b-col>
 

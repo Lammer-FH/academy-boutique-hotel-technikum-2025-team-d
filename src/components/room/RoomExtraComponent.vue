@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { BRow } from "bootstrap-vue-3";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 
-// byPrefixAndName erstellen
 const byPrefixAndName = {
   fas: Object.fromEntries(
       Object.entries(fas).map(([key, icon]) => [

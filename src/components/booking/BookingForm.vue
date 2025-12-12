@@ -38,11 +38,11 @@ export default {
     }
   },
   created() {
-    this.form.firstname = this.bookingData.customer.firstName;
-    this.form.lastname = this.bookingData.customer.lastName;
-    this.form.email = this.bookingData.customer.email;
-    this.form.confirmemail = this.bookingData.customer.email;
-    this.form.breakfast = this.bookingData.breakfast;
+    this.form.firstname = localStorage.getItem('firstname') || this.bookingData.customer.firstName;
+    this.form.lastname = localStorage.getItem('lastname') || this.bookingData.customer.lastName;
+    this.form.email = localStorage.getItem('email') || this.bookingData.customer.email;
+    this.form.confirmemail = localStorage.getItem('confirmemail') || this.bookingData.customer.email;
+    this.form.breakfast = localStorage.getItem('breakfast') || this.bookingData.breakfast;
 
     if (this.bookingData.customer.birthDate) {
       const birth = new Date(this.bookingData.customer.birthDate);
@@ -53,6 +53,10 @@ export default {
     }
   },
   methods: {
+    saveDataOnReload(key, value) {
+      localStorage.setItem(key, value);
+      this.form[key] = value;
+    },
 
     updateBookingDataStore(){
       this.bookingData.setFirstName(this.form.firstname);
@@ -106,7 +110,6 @@ export default {
       this.updateBookingDataStore()
       this.$router.push({ path: `/booking/confirmation` })
 
-      alert(JSON.stringify(this.form))
     },
   },
 
@@ -159,7 +162,7 @@ export default {
 </script>
 
 <template>
-  <div class="mb-5">
+  <div class="pt-4 pb-5">
     <h2 align="left">Persönliche Daten</h2>
     <b-form @submit="onSubmit">
 
@@ -170,6 +173,7 @@ export default {
             v-model="form.firstname"
             placeholder="Geben Sie bitte Ihren Vornamen ein"
             required
+            @input="saveDataOnReload('firstname', form.firstname)"
         ></b-form-input>
       </b-form-group>
 
@@ -180,6 +184,7 @@ export default {
             v-model="form.lastname"
             placeholder="Geben Sie bitte Ihren Nachnamen ein"
             required
+            @input="saveDataOnReload('lastname', form.lastname)"
         ></b-form-input>
       </b-form-group>
 
@@ -195,6 +200,7 @@ export default {
             type="email"
             placeholder="Email Adresse eingeben"
             required
+            @input="saveDataOnReload('email', form.email)"
         ></b-form-input>
       </b-form-group>
 
@@ -210,6 +216,7 @@ export default {
             type="email"
             placeholder="Email Adresse bestätigen"
             required
+            @input="saveDataOnReload('confirmemail', form.confirmemail)"
         ></b-form-input>
         <div v-if="validateEmails() === false && form.confirmemail !== ''" class="text-danger mt-2">
           Die Email Adressen stimmen nicht überein.
@@ -228,6 +235,7 @@ export default {
               :options="dayOptions"
               class="mr-2"
               :disabled="!form.birthMonth || !form.birthYear"
+              @input="saveDataOnReload('birthDay', form.birthDay)"
               required
           ></b-form-select>
 
@@ -237,6 +245,7 @@ export default {
               v-model="form.birthMonth"
               :options="monthOptions"
               class="mr-2"
+              @input="saveDataOnReload('birthMonth', form.birthMonth)"
               required
           ></b-form-select>
 
@@ -246,6 +255,7 @@ export default {
               label="Jahr"
               v-model="form.birthYear"
               :options="yearOptions"
+              @input="saveDataOnReload('birthYear', form.birthYear)"
               required
           ></b-form-select>
         </div>
@@ -257,22 +267,41 @@ export default {
       <b-form-group label="Frühstück:" v-slot="{ ariaDescribedby }"
                     align="left">
         <div class="d-flex gap-4">
-          <b-form-radio v-model="form.breakfast" required :aria-describedby="ariaDescribedby" name="breakfast-radios"
+          <b-form-radio v-model="form.breakfast"
+                        required
+                        @input="saveDataOnReload('breakfast', form.breakfast)"
+                        :aria-describedby="ariaDescribedby"
+                        name="breakfast-radios"
                         :value="true">Ja
           </b-form-radio>
-          <b-form-radio v-model="form.breakfast" required :aria-describedby="ariaDescribedby" name="breakfast-radios"
+          <b-form-radio v-model="form.breakfast"
+                        required
+                        @input="saveDataOnReload('breakfast', form.breakfast)"
+                        :aria-describedby="ariaDescribedby"
+                        name="breakfast-radios"
                         :value="false">Nein
           </b-form-radio>
         </div>
       </b-form-group>
 
-      <b-button type="submit" variant="primary">Buchungsdaten überprüfen</b-button>
-
+      <b-button class="cta-button" type="submit" variant="primary">Buchungsdaten überprüfen</b-button>
     </b-form>
   </div>
 </template>
 
 <style scoped>
+
+.cta-button {
+  background-color: #2d4739 !important;
+  color: #f5f5dc !important;
+  border: none !important;
+  transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #6A947D !important;
+  color: #f5f5dc !important;
+}
 
 
 </style>

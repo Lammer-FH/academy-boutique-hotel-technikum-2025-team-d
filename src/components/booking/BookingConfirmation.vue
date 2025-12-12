@@ -1,25 +1,41 @@
-//hier wird bei Button-Click "Bestätigen und Buchen" BookingStore aufgerufen
-
 <script>
 import BookingDetailsConfirmation from "@/components/booking/BookingDetailsConfirmation.vue";
 import BookingForm from "@/components/booking/BookingForm.vue";
 import RoomCardComponent from "@/components/room/RoomCardComponent.vue";
-import {BRow} from "bootstrap-vue-3";
+import {BRow, BAlert} from "bootstrap-vue-3";
 import {useBookingDataStore} from "@/stores/bookingDataStore";
 import {useRoomStore} from "@/stores/roomStore";
 
 export default {
   name: "BookingConfirmation",
-  components: {BRow, RoomCardComponent, BookingForm, BookingDetailsConfirmation},
-  /*
-  created() {
-    this.roomStore = useRoomStore()
-    this.roomStore.loadState();
+  components: {BRow, BAlert, RoomCardComponent, BookingForm, BookingDetailsConfirmation},
+  data(){
+    return{
+      bookingSuccess: false,
+      bookingError: null
+    }
   },
-   */
-  watch: {
-    totalPrice(newVal) {
-      this.bookingData.setTotalPrice(newVal);
+  created() {
+    const bookingData = useBookingDataStore();
+    const roomStore = useRoomStore();
+
+    // RoomStore laden, falls noch nicht geschehen
+    if (!roomStore.roomsList.length) {
+      roomStore.loadState();
+    }
+
+    // Wenn eine bookingId vorhanden ist, Buchung als erfolgreich markieren
+    if (bookingData.bookingId) {
+      this.bookingSuccess = true;
+    }
+  },
+  methods: {
+    onBookingSuccess() {
+      this.bookingSuccess = true
+      this.bookingError = null
+    },
+    onBookingError(error) {
+      this.bookingError = error
     }
   },
   computed: {
@@ -39,28 +55,88 @@ export default {
 
 <template>
 
-  <pre>{{ bookingData }}</pre>
-  <div>
-    <h1 v-if="room">Gewähltes Zimmer: {{ room.roomsName }}</h1>
-    <p v-if="room && bookingData.nights > 1">Buchungsdatum:
-      {{ new Date(bookingData.startDate).toLocaleDateString("de-De") }} -
-      {{ new Date(bookingData.endDate).toLocaleDateString("de-DE") }} / {{ bookingData.nights }} Nächte</p>
-    <p v-else>Buchungsdatum: {{ new Date(bookingData.startDate).toLocaleDateString("de-De") }} -
-      {{ new Date(bookingData.endDate).toLocaleDateString("de-DE") }} / {{ bookingData.nights }} Nacht</p>
-    <p v-if="room">Gesamtpreis: EUR {{ bookingData.totalPrice }}.-</p>
+  <div
+      v-if="bookingError"
+      class="alert alert-danger alert-dismissible fade show mb-4"
+      role="alert"
+  >
+    <strong>Buchung fehlgeschlagen.</strong>
+    Bitte versuchen Sie es erneut.
+
+    <button
+        type="button"
+        class="btn-close"
+        @click="bookingError = null"
+    ></button>
   </div>
+
+  <div v-if="bookingSuccess" class="alert alert-success mb-4" role="alert">Buchung erfolgreich!  </div>
+
+  <h1 v-if="!bookingSuccess" class="h1">Ihre Buchung</h1>
+  <h1 v-else class="h1">Buchungsbestätigung</h1>
+
+
   <b-row>
     <b-col cols="12" md="6">
-      <BookingDetailsConfirmation/>
+      <div align="left" class="mb-4">
+        <h2 class="mb-3" v-if="room">{{room.roomsName}}</h2>
+        <p class="mb-2" v-if="bookingSuccess">Buchungsnummer: {{bookingData.bookingId}}</p>
+        <p>Aufenthalt: {{bookingData.nights}} Nächte</p>
+        <p v-if="room">Von {{new Date (bookingData.startDate).toLocaleDateString("de-De")}} bis {{new Date(bookingData.endDate).toLocaleDateString("de-DE")}}</p>
+        <div class="price-box mb-4">
+          <span class="price-label">Gesamtpreis</span>
+          <span class="price-value">{{ bookingData.totalPrice }} €</span>
+        </div>
+      </div>
+      <BookingDetailsConfirmation
+          :is-booked="bookingSuccess"
+          @success="onBookingSuccess"
+          @error="onBookingError"
+      />
     </b-col>
     <b-col cols="12" md="6">
       <RoomCardComponent v-if="room" :room="room" :show-button="false"/>
     </b-col>
   </b-row>
-
+  <b-button class="cta-button" v-if="bookingSuccess">Zu meinen Buchungen</b-button>
 
 </template>
 
 <style scoped>
+
+.h1{
+  padding: 20px;
+}
+
+.price-box {
+  background-color: #f8f9fa;
+  padding: 12px 16px;
+  border-radius: 6px;
+  text-align: left;
+}
+
+.price-label {
+  display: block;
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.price-value {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #2d4739;
+}
+
+.cta-button {
+  background-color: #2d4739 !important;
+  color: #f5f5dc !important;
+  border: none !important;
+  transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #6A947D !important;
+  color: #f5f5dc !important;
+}
 
 </style>

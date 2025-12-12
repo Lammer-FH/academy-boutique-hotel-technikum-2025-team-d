@@ -10,7 +10,7 @@ export const useBookingStore = defineStore('BookingStore', {
     }),
     actions: {
         postBooking(roomId, startDate, endDate, firstName, lastName, email, birthDate) {
-            axios.post(apiUrl + `/room/${roomId}/from/${startDate}/to/${endDate}`, {
+            return axios.post(apiUrl + `/room/${roomId}/from/${startDate}/to/${endDate}`, {
                 "firstname": firstName,
                 "lastname": lastName,
                 "email": email,
@@ -21,10 +21,12 @@ export const useBookingStore = defineStore('BookingStore', {
                     let responseData = response.data;
                     console.log(responseData)
                     this.bookingId = responseData.id;
+                    return this.bookingId
 
                 })
                 .catch(error => {
                     console.error('Fehler:', error);
+                    throw error;
                 });
         },
     }

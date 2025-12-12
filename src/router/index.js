@@ -63,7 +63,13 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/BookingConfirmationView.vue')
     }
-  ]
+  ],
+  scrollBehavior() {
+    return new Promise((resolve) => {
+      resolve({ left: 0, top: 0 })
+    })
+  }
+
 })
 
 export default router

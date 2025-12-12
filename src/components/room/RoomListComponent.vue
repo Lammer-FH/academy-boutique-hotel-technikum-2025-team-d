@@ -1,9 +1,3 @@
-//TO DO
-//Anzahl Zimmer + Preis
-//Daten bereinigen: doppelte Extras im JSON
-//Verknüpfung Icon + ExtraName
-//Props in:
-
 <script>
 import {useRoomStore} from "@/stores/roomStore";
 import RoomCardComponent from "@/components/room/RoomCardComponent.vue";
@@ -58,6 +52,7 @@ export default {
 </script>
 
 <template>
+
 
   <p v-if="roomsListWithImagesAndDescriptions.length == 0">Lade Daten...</p>
   <b-list-group>

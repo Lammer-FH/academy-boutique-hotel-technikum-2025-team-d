@@ -6,11 +6,7 @@ import RoomListComponent from "@/components/room/RoomListComponent.vue";
 
 <template>
 <DefaultLayout>
-
-
   <RoomListComponent></RoomListComponent>
-
-
 </DefaultLayout>
 </template>
 
