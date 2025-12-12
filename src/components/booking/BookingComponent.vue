@@ -3,67 +3,73 @@ import BookingForm from "@/components/booking/BookingForm.vue";
 import {useRoomStore} from "@/stores/roomStore";
 import RoomCardComponent from "@/components/room/RoomCardComponent.vue";
 import {BRow} from "bootstrap-vue-3";
+import {useBookingDataStore} from "@/stores/bookingDataStore";
+import BookingDetailsConfirmation from "@/components/booking/BookingDetailsConfirmation.vue";
+import RoomListComponent from "@/components/room/RoomListComponent.vue";
 
 export default {
   name: "BookingComponent",
-  components: {BRow, RoomCardComponent, BookingForm},
+  components: {RoomListComponent, BRow, RoomCardComponent, BookingForm, BookingDetailsConfirmation,},
+  data() {
+    return {
+      //bookingData: useBookingDataStore(),
+      showRooms: false,
+    }
+  },
   created() {
     console.log("Room:", this.roomId);
     console.log("Start:", this.startDate);
     console.log("End:", this.endDate);
-    this.store = useRoomStore()
-    this.store.loadState();
+    this.roomStore = useRoomStore()
+    this.roomStore.loadState();
   },
   methods: {
-    calculateTotal(){
-
+    editRoomOrDate(){
+      this.showRooms = true;
     }
   },
   computed: {
-    roomId() {
-      return Number(this.$route.query.roomId);
+    room() {
+      return this.roomStore.getRoomById(this.bookingData.roomId);
     },
-    startDate() {
-      return this.$route.query.startDate;
-    },
-    endDate() {
-      return this.$route.query.endDate;
-    },
-    room(){
-      return this.store.getRoomById(this.roomId)
-    },
-    nights() {
-      if (!this.startDate || !this.endDate) return 0;
-
-      const start = new Date(this.startDate);
-      const end = new Date(this.endDate);
-
-      const diff = end - start; // ms
-      return diff / (1000 * 60 * 60 * 24); // ms → Tage
-    },
-
     totalPrice() {
-      if (!this.room) return 0;
-      return this.nights * this.room.pricePerNight;
-    }
-  },
+      if (!this.room) {
+        return 0;
+      }
+      let total = this.room.pricePerNight * this.bookingData.nights
+      this.bookingData.setTotalPrice(total);
+    },
+    bookingData() {
+      return useBookingDataStore();
+    },
+
+  }
 }
+
 </script>
 
 <template>
-  <div>
-    <h1 v-if="room">Gewähltes Zimmer: {{room.roomsName}}</h1>
-    <p v-if="room && nights > 1">Buchungsdatum: {{startDate}} - {{endDate}} / {{nights}} Nächte</p>
-    <p v-else>Buchungsdatum: {{startDate}} - {{endDate}} / {{nights}} Nacht</p>
-    <p v-if="room">Gesamtpreis: EUR {{totalPrice}}.-</p>
-  </div>
+  <!--
+  <pre>{{ bookingData }}</pre>
+  -->
+<h1>Ihre Buchung</h1>
   <b-row>
     <b-col cols="12" md="6">
+      <div align="left">
+        <h2 v-if="room">{{room.roomsName}}</h2>
+        <p>Aufenthalt: {{bookingData.nights}} Nächte</p>
+        <p v-if="room">Von {{new Date (bookingData.startDate).toLocaleDateString("de-De")}} bis {{new Date(bookingData.endDate).toLocaleDateString("de-DE")}}</p>
+        <p v-if="room">Gesamtpreis: EUR {{bookingData.totalPrice}}.-</p>
+        <b-button variant="primary" @click="editRoomOrDate">Bearbeiten</b-button>
+      </div>
       <BookingForm/>
     </b-col>
     <b-col cols="12" md="6">
       <RoomCardComponent v-if="room" :room="room" :show-button="false"/>
     </b-col>
+  </b-row>
+  <b-row v-if="showRooms">
+    <RoomListComponent/>
   </b-row>
 
 </template>

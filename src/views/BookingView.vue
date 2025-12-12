@@ -1,17 +1,18 @@
 <script>
 import BookingComponent from "@/components/booking/BookingComponent.vue";
 import DefaultLayout from "@/components/base/DefaultLayout.vue";
+import BookingLayout from "@/components/booking/BookingLayout.vue";
 
 export default {
   name: "BookingView",
-  components: {DefaultLayout, BookingComponent}
+  components: {BookingLayout, DefaultLayout, BookingComponent}
 }
 </script>
 
 <template>
-  <default-layout>
+  <booking-layout>
     <BookingComponent/>
-  </default-layout>
+  </booking-layout>
 
 </template>
 

@@ -10,6 +10,8 @@ import {
   BFormSelect, BFormValidFeedback,
 } from "bootstrap-vue-3";
 
+import {useBookingDataStore} from "@/stores/bookingDataStore";
+
 export default {
   name: "BookingForm",
   components: {
@@ -30,18 +32,37 @@ export default {
         birthMonth: null,
         birthYear: null,
         breakfast: null,
-        breakfastOptions: [
-          {text: 'Yes', value: 'breakfastYes'},
-          {text: 'No', value: 'breakfastNo'},
-        ]
-
       },
-      show: true
+      show: true,
+      bookingData: useBookingDataStore()
     }
   },
+  created() {
+    this.form.firstname = this.bookingData.customer.firstName;
+    this.form.lastname = this.bookingData.customer.lastName;
+    this.form.email = this.bookingData.customer.email;
+    this.form.confirmemail = this.bookingData.customer.email;
+    this.form.breakfast = this.bookingData.breakfast;
 
-
+    if (this.bookingData.customer.birthDate) {
+      const birth = new Date(this.bookingData.customer.birthDate);
+      this.form.birthDay = birth.getDate();
+      this.form.birthMonth = birth.getMonth() + 1;
+      this.form.birthYear = birth.getFullYear();
+      this.form.birthdate = this.bookingData.customer.birthDate;
+    }
+  },
   methods: {
+
+    updateBookingDataStore(){
+      this.bookingData.setFirstName(this.form.firstname);
+      this.bookingData.setLastName(this.form.lastname);
+      this.bookingData.setBreakfast(this.form.breakfast);
+      this.bookingData.setBirthDate(this.form.birthdate);
+      this.bookingData.setEmail(this.form.email)
+
+      console.log(this.bookingData)
+    },
 
     validateBirthdate() {
       if (!this.birthdate) return false;
@@ -62,7 +83,7 @@ export default {
       return this.form.email === this.form.confirmemail;
     },
 
-    onSubmit(event) {
+    onSubmit() {
       if (!this.form.birthDay || !this.form.birthMonth || !this.form.birthYear) {
         alert("Bitte geben Sie Ihr vollständiges Geburtsdatum ein.");
         return;
@@ -81,11 +102,14 @@ export default {
         alert("Die Email Adressen stimmen nicht überein.");
         return;
       }
-      event.preventDefault()
+
+      this.updateBookingDataStore()
+      this.$router.push({ path: `/booking/confirmation` })
 
       alert(JSON.stringify(this.form))
     },
   },
+
   computed: {
     dayOptions() {
       if (!this.form.birthMonth || !this.form.birthYear) {
@@ -137,7 +161,7 @@ export default {
 <template>
   <div class="mb-5">
     <h2 align="left">Persönliche Daten</h2>
-    <b-form @submit="onSubmit" v-if="show">
+    <b-form @submit="onSubmit">
 
       <b-form-group id="input-group-2" label="Vorname:" label-for="input-2"
                     align="left">
@@ -234,10 +258,10 @@ export default {
                     align="left">
         <div class="d-flex gap-4">
           <b-form-radio v-model="form.breakfast" required :aria-describedby="ariaDescribedby" name="breakfast-radios"
-                        value="breakfastYes">Ja
+                        :value="true">Ja
           </b-form-radio>
           <b-form-radio v-model="form.breakfast" required :aria-describedby="ariaDescribedby" name="breakfast-radios"
-                        value="breakfastNo">Nein
+                        :value="false">Nein
           </b-form-radio>
         </div>
       </b-form-group>

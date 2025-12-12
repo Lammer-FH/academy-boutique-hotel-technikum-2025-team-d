@@ -13,8 +13,8 @@ import {BContainer} from "bootstrap-vue-3";
     <main class="flex-fill mt-50">
       <b-container class="home-hero py-5">
         <b-row>
-          <b-col cols="12" lg="8" class="mx-auto text-center">
-      <slot/>
+          <b-col cols="12" lg="10" class="mx-auto text-center">
+            <slot/>
           </b-col>
         </b-row>
       </b-container>

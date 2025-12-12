@@ -7,6 +7,7 @@
 <script>
 import {BContainer} from "bootstrap-vue-3";
 import {useAvailabilityStore} from "@/stores/availabilityStore";
+import {useBookingDataStore} from "@/stores/bookingDataStore";
 
 export default {
   name: "CheckDateComponent",
@@ -19,7 +20,7 @@ export default {
       startDate: "",
       endDate: "",
       datesValid: null,
-      //ev errors[] wenn wir unterschiedliche Fehlermeldungen ausgeben wollen
+      bookingData: useBookingDataStore()
     }
   },
   created() {
@@ -48,6 +49,17 @@ export default {
       if (this.datesValid) {
         this.store.loadState(this.roomId, this.startDate, this.endDate)
       }
+    },
+
+    updateBookingDataState(){
+      this.bookingData.setRoomId(this.roomId);
+      this.bookingData.setStartDate(this.startDate);
+      this.bookingData.setEndDate(this.endDate);
+      console.log(this.bookingData.$state)
+    },
+    bookNow(){
+      this.updateBookingDataState()
+      this.$router.push("/booking");
     },
 
     validateInputs() {
@@ -126,15 +138,7 @@ export default {
       <b-button variant="primary" v-if="isAvailable == null || !isAvailable || !datesValid" @click="checkAvailability">
         Reisedaten bestätigen
       </b-button>
-      <b-button variant="success" v-else>
-        <RouterLink :to="{name: 'booking',
-query: {
-        roomId: roomId,
-        startDate: startDate,
-        endDate: endDate}
-}">Jetzt buchen
-        </RouterLink>
-      </b-button>
+      <b-button variant="success" v-else @click="bookNow">Jetzt buchen</b-button>
 
     </b-container>
   </div>

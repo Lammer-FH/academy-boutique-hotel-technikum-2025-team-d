@@ -3,8 +3,6 @@ import { BCard, BCardBody, BCardImg, BCardText, BCol, BRow } from "bootstrap-vue
 import RoomExtraComponent from "@/components/room/RoomExtraComponent.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-
-
 export default {
   name: "RoomCardComponent",
   props: {
@@ -22,14 +20,6 @@ export default {
     RoomExtraComponent,
     BCard, BCardBody, BCardImg, BCardText, BCol, BRow
   },
-  data() {
-    return {
-
-    }
-  },
-
-
-
 }
 </script>
 
