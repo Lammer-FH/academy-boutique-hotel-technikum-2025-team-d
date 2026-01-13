@@ -21,19 +21,21 @@ export default {
 
     // RoomStore laden, falls noch nicht geschehen
     if (!roomStore.roomsList.length) {
-      roomStore.loadState();
-    }
-
+      roomStore.loadState()}
     // Wenn eine bookingId vorhanden ist, Buchung als erfolgreich markieren
-    if (bookingData.bookingId) {
+    /* if (bookingData.bookingId) {
       this.bookingSuccess = true;
-    }
+    } */
   },
   methods: {
     onBookingSuccess() {
       this.bookingSuccess = true
       this.bookingError = null
+
+      const keysToRemove = ['firstname', 'lastname', 'email', 'confirmemail', 'breakfast', 'birthDay', 'birthMonth', 'birthYear']
+      keysToRemove.forEach(key => localStorage.removeItem(key))
     },
+
     onBookingError(error) {
       this.bookingError = error
     }
