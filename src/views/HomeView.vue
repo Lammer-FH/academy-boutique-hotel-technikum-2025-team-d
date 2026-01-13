@@ -81,9 +81,10 @@ export default {
     </b-container>
 
 
-    <b-button href="#" variant="light" size="lg" class="cta-button px-4 py-2">
-      <router-link class="cta-button" to="/rooms">Jetzt Zimmer ansehen</router-link>
-    </b-button>
+    <router-link to="/rooms" class="cta-button btn btn-light btn-lg px-4 py-2">
+      Jetzt Zimmer ansehen
+    </router-link>
+
 
 
   </DefaultLayout>

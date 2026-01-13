@@ -9,3 +9,104 @@ h1, h2, h3 {
     font-weight: 600;
     letter-spacing: 0.5px;
 }
+
+/* Print Styles - Global */
+@media print {
+    /* Header und Footer der Website ausblenden */
+    header,
+    footer,
+    nav,
+    .navbar,
+    .header,
+    .footer,
+    .nav-bar,
+    .room-card img,
+    .room-card .card-img,
+    .room-card .card-img-top{
+        display: none !important;
+    }
+
+    /* Buttons generell ausblenden im Druck */
+    button:not(.print-allowed),
+    .btn:not(.print-allowed) {
+        display: none !important;
+    }
+
+    /* Body Hintergrund weiß */
+    body {
+        background: white !important;
+    }
+
+    /* Farben im Druck erhalten */
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* Globale Schriftgrößen für Druck */
+    body, p, span, div {
+        font-size: 9pt !important;
+        line-height: 1.2 !important;
+        color: #333 !important;
+    }
+
+    h1 {
+        font-size: 20pt !important;
+        color: #2d4739 !important;
+        margin-bottom: 1rem !important;
+        page-break-after: avoid;
+    }
+
+    h3, h2, h4, h5, h6 {
+        font-size: 13pt !important;
+        color: #2d4739 !important;
+        page-break-after: avoid;
+    }
+
+    /* Links im Druck */
+    a {
+        color: #333 !important;
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+        font-size: 0.8em;
+        color: #666;
+    }
+
+    /* Listen */
+    li {
+        line-height: 1.4;
+    }
+
+    /* Seitenumbrüche kontrollieren */
+    .b-row, .b-col, .card, .info-card {
+        page-break-inside: avoid;
+    }
+
+    .container, .b-container {
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.5rem !important;
+    }
+
+    .mb-5 {
+        margin-bottom: 1rem !important;
+    }
+
+    .mb-4 {
+        margin-bottom: 0.5rem !important;
+    }
+
+    .mb-3 {
+        margin-bottom: 0.3rem !important;
+    }
+
+    .mb-2 {
+        margin-bottom: 0.2rem !important;
+    }
+
+    p {
+        margin-bottom: 0.3rem !important;
+    }
+}

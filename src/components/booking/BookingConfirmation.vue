@@ -5,12 +5,19 @@ import RoomCardComponent from "@/components/room/RoomCardComponent.vue";
 import {BRow, BAlert} from "bootstrap-vue-3";
 import {useBookingDataStore} from "@/stores/bookingDataStore";
 import {useRoomStore} from "@/stores/roomStore";
+import ContactComponent from "@/components/booking/ContactComponent.vue";
+import DirectionsComponent from "@/components/booking/DirectionsComponent.vue";
+import CheckinInfoComponent from "@/components/booking/CeckinInfoComponent.vue";
 
 export default {
   name: "BookingConfirmation",
-  components: {BRow, BAlert, RoomCardComponent, BookingForm, BookingDetailsConfirmation},
-  data(){
-    return{
+  components: {
+    CheckinInfoComponent,
+    DirectionsComponent,
+    ContactComponent, BRow, BAlert, RoomCardComponent, BookingForm, BookingDetailsConfirmation
+  },
+  data() {
+    return {
       bookingSuccess: false,
       bookingError: null
     }
@@ -21,7 +28,8 @@ export default {
 
     // RoomStore laden, falls noch nicht geschehen
     if (!roomStore.roomsList.length) {
-      roomStore.loadState()}
+      roomStore.loadState()
+    }
     // Wenn eine bookingId vorhanden ist, Buchung als erfolgreich markieren
     /* if (bookingData.bookingId) {
       this.bookingSuccess = true;
@@ -72,7 +80,7 @@ export default {
     ></button>
   </div>
 
-  <div v-if="bookingSuccess" class="alert alert-success mb-4" role="alert">Buchung erfolgreich!  </div>
+  <div v-if="bookingSuccess" class="alert alert-success mb-4" role="alert">Buchung erfolgreich!</div>
 
   <h1 v-if="!bookingSuccess" class="h1">Ihre Buchung</h1>
   <h1 v-else class="h1">Buchungsbestätigung</h1>
@@ -81,10 +89,11 @@ export default {
   <b-row>
     <b-col cols="12" md="6">
       <div align="left" class="mb-4">
-        <h2 class="mb-3" v-if="room">{{room.roomsName}}</h2>
-        <p class="mb-2" v-if="bookingSuccess">Buchungsnummer: {{bookingData.bookingId}}</p>
-        <p>Aufenthalt: {{bookingData.nights}} Nächte</p>
-        <p v-if="room">Von {{new Date (bookingData.startDate).toLocaleDateString("de-De")}} bis {{new Date(bookingData.endDate).toLocaleDateString("de-DE")}}</p>
+        <h2 class="mb-3" v-if="room">{{ room.roomsName }}</h2>
+        <p class="mb-2" v-if="bookingSuccess">Buchungsnummer: {{ bookingData.bookingId }}</p>
+        <p>Aufenthalt: {{ bookingData.nights }} Nächte</p>
+        <p v-if="room">Von {{ new Date(bookingData.startDate).toLocaleDateString("de-De") }} bis
+          {{ new Date(bookingData.endDate).toLocaleDateString("de-DE") }}</p>
         <div class="price-box mb-4">
           <span class="price-label">Gesamtpreis</span>
           <span class="price-value">{{ bookingData.totalPrice }} €</span>
@@ -100,14 +109,23 @@ export default {
       <RoomCardComponent v-if="room" :room="room" :show-button="false"/>
     </b-col>
   </b-row>
+  <!-- Button Buchungshistorie
   <b-button class="cta-button" v-if="bookingSuccess">Zu meinen Buchungen</b-button>
+  -->
 
+  <!--Anfahrt und Kontakt-->
+  <div v-if="bookingSuccess">
+  <DirectionsComponent/>
+  <CheckinInfoComponent/>
+  <ContactComponent></ContactComponent>
+  </div>
 </template>
 
 <style scoped>
 
-.h1{
+.h1 {
   padding: 20px;
+  color: #2d4739;
 }
 
 .price-box {

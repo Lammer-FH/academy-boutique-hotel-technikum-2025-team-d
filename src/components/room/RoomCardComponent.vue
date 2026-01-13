@@ -25,7 +25,7 @@ export default {
 
 <template>
 
-  <div>
+  <div class="room-card">
     <b-card
         :title="room.roomsName"
         :img-src="room.image"
