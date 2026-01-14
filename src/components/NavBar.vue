@@ -1,4 +1,4 @@
-<script setup>
+<script>
 import {
   BNavbar,
   BNavbarBrand,
@@ -6,11 +6,58 @@ import {
   BCollapse,
   BNavbarNav,
   BButton
-} from 'bootstrap-vue-3'
+} from 'bootstrap-vue-3';
+import {useUserStore} from "@/stores/userStore";
+
+export default {
+  name: "NavBar",
+  components: {
+    BNavbar,
+    BNavbarBrand,
+    BNavbarToggle,
+    BCollapse,
+    BNavbarNav,
+    BButton
+  },
+
+  data() {
+    return {
+      userData: useUserStore(),
+      showLogoutSuccess: false
+    }
+  },
+
+  computed: {
+    isLoggedIn() {
+      return this.userData.isLoggedIn
+    }
+  },
+
+  methods: {
+    logout() {
+      this.userData.logout()
+      this.showLogoutSuccess = true
+
+      setTimeout(() => {
+        this.showLogoutSuccess = false
+      }, 3000)
+    }
+  }
+}
+
 </script>
 
 <template>
   <div>
+
+    <b-alert
+        v-model="showLogoutSuccess"
+        variant="success"
+        dismissible: true
+        class="logout-alert">
+      Erfolgreich ausgeloggt!
+    </b-alert>
+
     <b-navbar toggleable="lg" class="navbar-custom fixed-top">
       <b-navbar-brand>
         <router-link to="/" class="nav-link-custom">Boutique Hotel Technikum</router-link>
@@ -26,7 +73,21 @@ import {
         </b-navbar-nav>
 
         <b-navbar-nav class="ms-auto">
-          <router-link to="/login" class="login-btn btn">Login</router-link>
+
+          <router-link
+              v-if="!isLoggedIn"
+              to="/login"
+              class="login-logout-btn btn">
+            Login
+          </router-link>
+
+          <b-button
+              v-else
+              @click="logout"
+              class="login-logout-btn btn">
+            Logout
+          </b-button>
+
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -62,16 +123,25 @@ import {
   letter-spacing: 0.5px;
 }
 
-/* Login-Button */
-.login-btn {
+
+.login-logout-btn btn {
   color: #2d4739 !important;
   background-color: #f5f5dc !important;
   border: none !important;
   font-weight: 500;
 }
 
-.login-btn:hover {
+.login-logout-btn btn:hover {
   background-color: #d4af37 !important;
   color: #2d4739 !important;
+}
+
+.logout-alert {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 9999;
+  min-width: 300px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 </style>

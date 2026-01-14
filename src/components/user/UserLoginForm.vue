@@ -17,10 +17,19 @@ export default {
     }
   },
 
+  computed:{
+      isLoggedIn() {
+        return this.userData.isLoggedIn
+    }
+  },
+
   methods:{
 
     onSubmit(){
-      console.log(this.userData)
+
+      this.userData.postLogin(this.form.email, this.form.password)
+
+      //console.log(this.userData)
     }
   }
 }
@@ -56,9 +65,9 @@ export default {
         ></b-form-input>
       </b-form-group>
 
-      <b-button class="cta-button" type="submit" variant="primary">Jetzt Anmelden</b-button>
+      <b-button v-if="!isLoggedIn" class="cta-button" type="submit" variant="primary">Jetzt Anmelden</b-button>
 
-      <p>Sie haben noch keinen Account? <router-link to="/registration" class="cta-button btn btn-light btn-lg px-4 py-2">
+      <p>Sie haben noch keinen Account? <router-link to="/registration">
         Jetzt Registrieren!
       </router-link></p>
 

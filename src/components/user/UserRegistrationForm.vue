@@ -25,19 +25,9 @@ export default {
 
   methods: {
 
-    saveDataOnReload(key, value) {
+      saveDataOnReload(key, value) {
       localStorage.setItem(key, value);
       this.form[key] = value;
-    },
-
-    updateUserDataStore(){
-      this.userData.setFirstName(this.form.firstname);
-      this.userData.setLastName(this.form.lastname);
-      this.userData.setPassword(this.form.password);
-      this.userData.setUsername(this.form.username);
-      this.userData.setEmail(this.form.email)
-
-
     },
 
     validateEmails() {
@@ -127,6 +117,18 @@ export default {
         <div v-if="validateEmails() === false && form.confirmemail !== ''" class="text-danger mt-2">
           Die Email Adressen stimmen nicht überein.
         </div>
+      </b-form-group>
+
+
+      <b-form-group id="input-group-2" label="Username:" label-for="input-2"
+                    align="left">
+        <b-form-input
+            id="input-2"
+            v-model="form.username"
+            placeholder="Geben Sie bitte einen Usernamen ein"
+            required
+            @input="saveDataOnReload('username', form.username)"
+        ></b-form-input>
       </b-form-group>
 
       <b-form-group
