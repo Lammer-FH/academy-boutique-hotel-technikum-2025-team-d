@@ -26,7 +26,7 @@ import {
         </b-navbar-nav>
 
         <b-navbar-nav class="ms-auto">
-          <b-button class="login-btn">Login</b-button>
+          <router-link to="/login" class="login-btn btn">Login</router-link>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>

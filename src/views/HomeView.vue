@@ -85,7 +85,9 @@ export default {
       Jetzt Zimmer ansehen
     </router-link>
 
-
+    <router-link to="/registration" class="cta-button btn btn-light btn-lg px-4 py-2">
+      Jetzt Registrieren
+    </router-link>
 
   </DefaultLayout>
 </template>
