@@ -10,9 +10,10 @@ export const useUserStore = defineStore("userStore", {
         userId: localStorage.getItem("userId") || null,
 
         isRegistrationSuccessful: false,
-        error: null,
+        errorMessage: null,
+        loginSuccessMessage: null,
+        registrationSuccessMessage: null,
 
-        // User Data (nur was du brauchst)
         user: {
             firstName: "",
             lastName: "",
@@ -31,12 +32,32 @@ export const useUserStore = defineStore("userStore", {
 
     actions: {
         clearError() {
-            this.error = null;
+            this.errorMessage = null;
             this.userError = null;
+        },
+        clearSuccessMessages() {
+            this.loginSuccessMessage = null;
+            this.registrationSuccessMessage = null;
+
+        },
+        clearMessages(){
+            this.errorMessage = null;
+            this.successMessage = null;
+            this.loginSuccessMessage = null;
+            this.registrationSuccessMessage = null;
+        },
+        setError(error) {
+            this.errorMessage = error;
+        },
+        setLoginSuccessMessage(message) {
+            this.loginSuccessMessage = message;
+        },
+        setRegistrationSuccessMessage(message) {
+            this.registrationSuccessMessage = message;
         },
 
         postRegistration(firstName, lastName, email, userName, password) {
-            this.clearError();
+            this.clearMessages();
             this.isRegistrationSuccessful = false;
 
             return axios
@@ -60,19 +81,22 @@ export const useUserStore = defineStore("userStore", {
                     }
 
                     this.isRegistrationSuccessful = true;
+                    this.setRegistrationSuccessMessage("Registrierung erfolgreich! Sie werden weitergeleitet");
+
 
                     // wie bei dir: nach Register direkt Login
                     return this.postLogin(email, password);
                 })
                 .catch((error) => {
                     console.error("Fehler:", error);
-                    this.error = "Registrierung fehlgeschlagen. Bitte versuchen Sie es erneut";
+                    this.setError("Registrierung fehlgeschlagen. Bitte versuchen Sie es erneut");
                     throw error;
                 });
         },
 
         postLogin(email, password) {
-            this.clearError();
+            this.errorMessage = null
+            this.userError = null
 
             return axios
                 .post(
@@ -110,7 +134,7 @@ export const useUserStore = defineStore("userStore", {
                     localStorage.removeItem("token");
                     localStorage.removeItem("userId");
 
-                    this.error = "Login fehlgeschlagen. Bitte prüfen Sie E-Mail und Passwort.";
+                    this.errorMessage = "Login fehlgeschlagen. Bitte prüfen Sie E-Mail und Passwort.";
                     throw error;
                 });
         },
@@ -159,7 +183,7 @@ export const useUserStore = defineStore("userStore", {
             localStorage.removeItem("userId");
 
             this.isRegistrationSuccessful = false;
-            this.error = null;
+            this.errorMessage = null;
             this.userError = null;
 
             this.userDataLoaded = false;

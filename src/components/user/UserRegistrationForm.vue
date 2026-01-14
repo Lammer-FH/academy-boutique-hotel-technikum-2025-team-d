@@ -1,11 +1,10 @@
 <script>
-
-import {BForm} from "bootstrap-vue-3";
+import {BForm, BAlert} from "bootstrap-vue-3";
 import {useUserStore} from "@/stores/userStore";
 
 export default {
   name: "UserRegistrationComponent",
-  components: {BForm},
+  components: {BForm, BAlert},
 
   data() {
     return {
@@ -19,13 +18,13 @@ export default {
         username: '',
       },
       show: true,
-      userData: useUserStore()
+      userData: useUserStore(),
+      showRegistrationSuccess: false
     }
   },
 
   methods: {
-
-      saveDataOnReload(key, value) {
+    saveDataOnReload(key, value) {
       localStorage.setItem(key, value);
       this.form[key] = value;
     },
@@ -38,20 +37,43 @@ export default {
       return this.form.password === this.form.confirmpassword;
     },
 
-    onSubmit(){
+    async onSubmit(event) {
+      event.preventDefault();
+
       if (!this.validateEmails()) {
         alert("Die Email Adressen stimmen nicht überein.");
         return;
       }
 
-      if (!this.validatePassword()){
+      if (!this.validatePassword()) {
         alert("Die Passwörter stimmen nicht überein")
         return;
       }
 
-      //this.updateUserDataStore()
-      this.userData.postRegistration(this.form.firstname, this.form.lastname, this.form.email, this.form.username, this.form.password)
-      console.log(this.userData)
+      try {
+        await this.userData.postRegistration(
+            this.form.firstname,
+            this.form.lastname,
+            this.form.email,
+            this.form.username,
+            this.form.password
+        )
+
+        console.log(this.userData)
+
+        // Success-Meldung anzeigen
+        this.showRegistrationSuccess = true
+
+        // Nach 3 Sekunden zurück navigieren
+        setTimeout(() => {
+          this.showRegistrationSuccess = false
+          this.$router.go(-2)
+        }, 3000)
+
+      } catch (error) {
+        alert("Registrierung fehlgeschlagen. Bitte versuchen Sie es erneut.")
+        console.error(error)
+      }
     }
   }
 }
@@ -59,6 +81,15 @@ export default {
 
 <template>
   <div class="pt-4 pb-5">
+    <!-- Success Alert -->
+    <b-alert
+        v-model="showRegistrationSuccess"
+        variant="success"
+        dismissible
+        class="registration-alert">
+      Registrierung erfolgreich! Sie werden weitergeleitet...
+    </b-alert>
+
     <h2 align="left">Registrierung</h2>
     <b-form @submit="onSubmit">
 
@@ -118,7 +149,6 @@ export default {
           Die Email Adressen stimmen nicht überein.
         </div>
       </b-form-group>
-
 
       <b-form-group id="input-group-2" label="Username:" label-for="input-2"
                     align="left">
@@ -181,6 +211,15 @@ export default {
 .cta-button:hover {
   background-color: #6A947D !important;
   color: #f5f5dc !important;
+}
+
+.registration-alert {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 9999;
+  min-width: 350px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 </style>
