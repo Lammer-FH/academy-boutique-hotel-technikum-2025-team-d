@@ -5,6 +5,7 @@ import CarouselV2 from "@/components/base/CarouselV2.vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {faHouse} from "@fortawesome/free-solid-svg-icons";
 import {useBookingDataStore} from "@/stores/bookingDataStore";
+import {useUserStore} from "@/stores/userStore";
 
 
 export default {
@@ -13,6 +14,7 @@ export default {
   data() {
     return {
       bookingData: useBookingDataStore(),
+      userStore: useUserStore(),
       carouselPictures: [
         '/images/Boutique-Hotel-Rooms/Boutique-Hotel-Rooms-1.jpg',
         '/images/Boutique-Hotel-Rooms/Boutique-Hotel-Rooms-2.jpg',
@@ -99,6 +101,8 @@ export default {
     <router-link to="/rooms" @click="resetLocalStore" class="cta-button btn btn-light btn-lg px-4 py-2">
       Jetzt Zimmer ansehen
     </router-link>
+
+    <b-button @click="userStore.getBookings">Test</b-button>
 
   </DefaultLayout>
 </template>

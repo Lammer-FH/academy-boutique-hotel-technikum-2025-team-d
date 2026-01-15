@@ -1,17 +1,16 @@
 import {defineStore} from 'pinia'
-import axios from "axios";
+import api from "@/services/api";
 
 
-const apiUrl = "https://boutique-hotel.helmuth-lammer.at/api/v1"
+
 
 export const useAvailabilityStore = defineStore('RoomAvailabilityStore', {
-    //Überprüfen: Braucht man State isAvailable?
     state: () => ({
         availability: {} ,
     }),
     actions: {
         loadState(roomId, startDate, endDate) {
-            axios.get(apiUrl + `/room/${roomId}/from/${startDate}/to/${endDate}`)
+            api.get(`/room/${roomId}/from/${startDate}/to/${endDate}`)
                 .then(response => {
                     let responseData = response.data;
                     console.log(responseData)

@@ -1,7 +1,5 @@
 import { defineStore } from "pinia";
-import axios from "axios";
-
-const apiUrl = "https://boutique-hotel.helmuth-lammer.at/api/v1";
+import api from "@/services/api";
 
 export const useUserStore = defineStore("userStore", {
     state: () => ({
@@ -34,9 +32,9 @@ export const useUserStore = defineStore("userStore", {
     actions: {
 
         postRegistration(firstName, lastName, email, userName, password) {
-            return axios
+            return api
                 .post(
-                    apiUrl + "/register",
+                    "/register",
                     {
                         firstname: firstName,
                         lastname: lastName,
@@ -63,9 +61,9 @@ export const useUserStore = defineStore("userStore", {
         },
 
         postLogin(email, password) {
-            return axios
+            return api
                 .post(
-                    apiUrl + "/login",
+                    "/login",
                     {
                         clientId: email,
                         secret: password,
@@ -112,13 +110,8 @@ export const useUserStore = defineStore("userStore", {
             this.userDataLoading = true;
             this.userError = null;
 
-            return axios
-                .get(apiUrl + "/user/", {
-                    headers: {
-                        Authorization: `Bearer ${this.token}`,
-                        Accept: "application/json",
-                    },
-                })
+            return api
+                .get("/user/")
                 .then((response) => {
                     const data = response.data;
                     console.log("userData:", data);
@@ -139,6 +132,19 @@ export const useUserStore = defineStore("userStore", {
                 .finally(() => {
                     this.userDataLoading = false;
                 });
+        },getBookings() {
+            return api
+                .get("/user/bookings")
+                .then((response) => {
+                    const data = response.data;
+                    console.log("bookings:", data);
+
+                })
+                .catch((error) => {
+                    console.error("getBookings Fehler:", error);
+                    throw error;
+                })
+
         },
 
         logout() {

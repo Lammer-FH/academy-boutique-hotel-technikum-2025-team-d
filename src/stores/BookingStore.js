@@ -1,8 +1,7 @@
 import {defineStore} from 'pinia'
-import axios from "axios";
+import api from "@/services/api";
+import {useUserStore} from "@/stores/userStore";
 
-
-const apiUrl = "https://boutique-hotel.helmuth-lammer.at/api/v1"
 
 export const useBookingStore = defineStore('BookingStore', {
     state: () => ({
@@ -10,18 +9,28 @@ export const useBookingStore = defineStore('BookingStore', {
     }),
     actions: {
         postBooking(roomId, startDate, endDate, firstName, lastName, email, birthDate) {
-            return axios.post(apiUrl + `/room/${roomId}/from/${startDate}/to/${endDate}`, {
+            console.log("=== BOOKING DEBUG ===");
+            console.log("Token in localStorage:", localStorage.getItem("token"));
+            return api.post(`/room/${roomId}/from/${startDate}/to/${endDate}`, {
                 "firstname": firstName,
                 "lastname": lastName,
                 "email": email,
                 "birthdate": birthDate
-            }, { headers: {'Content-Type': 'application/json'}})
+            })
                 .then(response => {
 
                     let responseData = response.data;
                     console.log(responseData)
                     this.bookingId = responseData.id;
+
+
+                    const userStore = useUserStore();
+                    if (userStore.isLoggedIn) {
+                        userStore.fetchUserData();
+                    }
+
                     return this.bookingId
+
 
                 })
                 .catch(error => {

@@ -11,6 +11,7 @@ import {
 } from "bootstrap-vue-3";
 
 import {useBookingDataStore} from "@/stores/bookingDataStore";
+import {useUserStore} from "@/stores/userStore";
 
 export default {
   name: "BookingForm",
@@ -34,24 +35,34 @@ export default {
         breakfast: null,
       },
       show: true,
-      bookingData: useBookingDataStore()
+      bookingData: useBookingDataStore(),
+      userData: useUserStore()
     }
   },
   created() {
-    this.form.firstname = localStorage.getItem('firstname') || this.bookingData.customer.firstName;
-    this.form.lastname = localStorage.getItem('lastname') || this.bookingData.customer.lastName;
-    this.form.email = localStorage.getItem('email') || this.bookingData.customer.email;
-    this.form.confirmemail = localStorage.getItem('confirmemail') || this.bookingData.customer.email;
+
+    const getUserData = () => (this.userData.isLoggedIn && this.userData.hasUserData)
+        ? this.userData.user
+        : this.bookingData.customer;
+
+    const source = getUserData();
+
+    this.form.firstname = localStorage.getItem('firstname') || source.firstName || '';
+    this.form.lastname = localStorage.getItem('lastname') || source.lastName || '';
+    this.form.email = localStorage.getItem('email') || source.email || '';
+    this.form.confirmemail = localStorage.getItem('confirmemail') || source.email || '';
     this.form.breakfast = localStorage.getItem('breakfast') || this.bookingData.breakfast;
 
-    if (this.bookingData.customer.birthDate) {
-      const birth = new Date(this.bookingData.customer.birthDate);
+    const birthDate = localStorage.getItem('birthdate') || source.birthDate;
+    if (birthDate) {
+      const birth = new Date(birthDate);
       this.form.birthDay = birth.getDate();
       this.form.birthMonth = birth.getMonth() + 1;
       this.form.birthYear = birth.getFullYear();
-      this.form.birthdate = this.bookingData.customer.birthDate;
+      this.form.birthdate = birthDate;
     }
-  },
+
+    },
   methods: {
     saveDataOnReload(key, value) {
       localStorage.setItem(key, value);

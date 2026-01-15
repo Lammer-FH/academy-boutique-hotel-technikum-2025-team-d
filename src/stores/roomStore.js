@@ -1,6 +1,6 @@
 import {defineStore} from 'pinia'
-import axios from "axios";
 import {roomLocalData} from "@/components/room/roomLocalData";
+import api from "@/services/api";
 
 
 const apiUrl = "https://boutique-hotel.helmuth-lammer.at/api/v1"
@@ -11,7 +11,7 @@ export const useRoomStore = defineStore('RoomStore', {
     }),
     actions: {
         loadState() {
-           return axios.get(apiUrl + "/rooms")
+           return api.get("/rooms")
                 .then(response => {
                     this.roomsList = response.data.map(room => {
                         // 1. Nur Extras mit Wert 1 behalten
