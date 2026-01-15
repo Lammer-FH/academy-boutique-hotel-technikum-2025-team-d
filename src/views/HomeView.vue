@@ -4,28 +4,43 @@ import {BButton} from "bootstrap-vue-3";
 import CarouselV2 from "@/components/base/CarouselV2.vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {faHouse} from "@fortawesome/free-solid-svg-icons";
+import {useBookingDataStore} from "@/stores/bookingDataStore";
 
 
 export default {
-  methods: {
-    faHouse() {
-      return faHouse
-    }
-  },
+
   components: {FontAwesomeIcon, CarouselV2, BButton, DefaultLayout},
   data() {
     return {
+      bookingData: useBookingDataStore(),
       carouselPictures: [
         '/images/Boutique-Hotel-Rooms/Boutique-Hotel-Rooms-1.jpg',
         '/images/Boutique-Hotel-Rooms/Boutique-Hotel-Rooms-2.jpg',
         '/images/Boutique-Hotel-Rooms/Boutique-Hotel-Rooms-3.jpg',
       ],
+
     };
 
   },
   mounted() {
     console.log('Bilder im Parent:', this.carouselPictures)
-  }
+  },
+
+  methods: {
+    faHouse() {
+      return faHouse
+    },
+
+    resetLocalStore(){
+
+      const keysToRemove = ['firstname', 'lastname', 'email', 'confirmemail', 'breakfast', 'birthDay', 'birthMonth', 'birthYear']
+      keysToRemove.forEach(key => localStorage.removeItem(key))
+
+      this.bookingData.reset()
+    }
+  },
+
+
 };
 
 </script>
@@ -81,7 +96,7 @@ export default {
     </b-container>
 
 
-    <router-link to="/rooms" class="cta-button btn btn-light btn-lg px-4 py-2">
+    <router-link to="/rooms" @click="resetLocalStore" class="cta-button btn btn-light btn-lg px-4 py-2">
       Jetzt Zimmer ansehen
     </router-link>
 

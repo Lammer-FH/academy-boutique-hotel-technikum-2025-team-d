@@ -2,6 +2,7 @@
 
 import DefaultLayout from "@/components/base/DefaultLayout.vue";
 import RoomListComponent from "@/components/room/RoomListComponent.vue";
+
 </script>
 
 <template>

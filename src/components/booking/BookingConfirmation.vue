@@ -7,7 +7,7 @@ import {useBookingDataStore} from "@/stores/bookingDataStore";
 import {useRoomStore} from "@/stores/roomStore";
 import ContactComponent from "@/components/booking/ContactComponent.vue";
 import DirectionsComponent from "@/components/booking/DirectionsComponent.vue";
-import CheckinInfoComponent from "@/components/booking/CeckinInfoComponent.vue";
+import CheckinInfoComponent from "@/components/booking/CheckinInfoComponent.vue";
 
 export default {
   name: "BookingConfirmation",
@@ -18,6 +18,7 @@ export default {
   },
   data() {
     return {
+      bookingData: useBookingDataStore(),
       bookingSuccess: false,
       bookingError: null
     }
@@ -40,8 +41,7 @@ export default {
       this.bookingSuccess = true
       this.bookingError = null
 
-      const keysToRemove = ['firstname', 'lastname', 'email', 'confirmemail', 'breakfast', 'birthDay', 'birthMonth', 'birthYear']
-      keysToRemove.forEach(key => localStorage.removeItem(key))
+
     },
 
     onBookingError(error) {

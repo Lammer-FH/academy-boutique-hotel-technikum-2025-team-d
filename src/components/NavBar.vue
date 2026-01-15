@@ -30,6 +30,10 @@ export default {
   computed: {
     isLoggedIn() {
       return this.userData.isLoggedIn
+    },
+
+    userGreeting() {
+      return this.userData.displayName
     }
   },
 
@@ -81,12 +85,14 @@ export default {
             Login
           </router-link>
 
-          <b-button
-              v-else
-              @click="logout"
-              class="login-logout-btn btn">
-            Logout
-          </b-button>
+            <div v-else class="d-flex align-items-center">
+            <span class="user-greeting">
+              Hallo {{userGreeting}}
+            </span>
+              <b-button @click="logout" class="login-logout-btn">
+                Logout
+              </b-button>
+            </div>
 
         </b-navbar-nav>
       </b-collapse>
@@ -124,14 +130,23 @@ export default {
 }
 
 
-.login-logout-btn btn {
+.user-greeting {
+  color: #f5f5dc !important;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+}
+
+.login-logout-btn {
   color: #2d4739 !important;
   background-color: #f5f5dc !important;
   border: none !important;
   font-weight: 500;
+  margin-left: 0.5rem;
 }
 
-.login-logout-btn btn:hover {
+.login-logout-btn:hover {
   background-color: #d4af37 !important;
   color: #2d4739 !important;
 }

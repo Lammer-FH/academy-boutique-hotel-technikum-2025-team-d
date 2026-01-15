@@ -68,7 +68,7 @@ export default {
             id="input-1"
             v-model="form.password"
             type="password"
-            placeholder="Gewünschtes Passwort eingeben"
+            placeholder="Passwort eingeben"
             required
         ></b-form-input>
       </b-form-group>

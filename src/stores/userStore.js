@@ -9,57 +9,31 @@ export const useUserStore = defineStore("userStore", {
         token: localStorage.getItem("token") || null,
         userId: localStorage.getItem("userId") || null,
 
-        isRegistrationSuccessful: false,
-        errorMessage: null,
-        loginSuccessMessage: null,
-        registrationSuccessMessage: null,
-
+        //User-Daten
         user: {
             firstName: "",
             lastName: "",
             email: "",
             birthDate: "",
+            bookings: [],
         },
 
-        userDataLoaded: false,
         userDataLoading: false,
         userError: null,
     }),
 
     getters: {
         isLoggedIn: (state) => !!state.token,
+        hasUserData: (state) => !!state.user?.email,
+        displayName: (state) => {
+            const full = `${state.user?.firstName ?? ""} ${state.user?.lastName ?? ""}`.trim();
+            return full.length ? full : null
+        },
     },
 
     actions: {
-        clearError() {
-            this.errorMessage = null;
-            this.userError = null;
-        },
-        clearSuccessMessages() {
-            this.loginSuccessMessage = null;
-            this.registrationSuccessMessage = null;
-
-        },
-        clearMessages(){
-            this.errorMessage = null;
-            this.successMessage = null;
-            this.loginSuccessMessage = null;
-            this.registrationSuccessMessage = null;
-        },
-        setError(error) {
-            this.errorMessage = error;
-        },
-        setLoginSuccessMessage(message) {
-            this.loginSuccessMessage = message;
-        },
-        setRegistrationSuccessMessage(message) {
-            this.registrationSuccessMessage = message;
-        },
 
         postRegistration(firstName, lastName, email, userName, password) {
-            this.clearMessages();
-            this.isRegistrationSuccessful = false;
-
             return axios
                 .post(
                     apiUrl + "/register",
@@ -80,24 +54,15 @@ export const useUserStore = defineStore("userStore", {
                         throw new Error("Registration: Leere Antwort");
                     }
 
-                    this.isRegistrationSuccessful = true;
-                    this.setRegistrationSuccessMessage("Registrierung erfolgreich! Sie werden weitergeleitet");
-
-
-                    // wie bei dir: nach Register direkt Login
                     return this.postLogin(email, password);
                 })
                 .catch((error) => {
-                    console.error("Fehler:", error);
-                    this.setError("Registrierung fehlgeschlagen. Bitte versuchen Sie es erneut");
+                    console.error("Registration Fehler:", error);
                     throw error;
                 });
         },
 
         postLogin(email, password) {
-            this.errorMessage = null
-            this.userError = null
-
             return axios
                 .post(
                     apiUrl + "/login",
@@ -123,27 +88,28 @@ export const useUserStore = defineStore("userStore", {
                     localStorage.setItem("token", this.token);
                     localStorage.setItem("userId", this.userId);
 
-                    // ✅ danach Userdaten laden
                     return this.fetchUserData();
                 })
                 .catch((error) => {
-                    console.error("Fehler:", error);
+                    console.error("Login-Fehler:", error);
 
                     this.token = null;
                     this.userId = null;
                     localStorage.removeItem("token");
                     localStorage.removeItem("userId");
-
-                    this.errorMessage = "Login fehlgeschlagen. Bitte prüfen Sie E-Mail und Passwort.";
                     throw error;
                 });
         },
 
         fetchUserData() {
-            if (!this.token) return Promise.reject(new Error("Nicht eingeloggt"));
+
+            if (!this.token) {
+                this.userError = "Nicht eingeloggt";
+                this.userDataLoading = false;
+                return Promise.reject(new Error("Nicht eingeloggt"));
+            }
 
             this.userDataLoading = true;
-            this.userDataLoaded = false;
             this.userError = null;
 
             return axios
@@ -160,13 +126,13 @@ export const useUserStore = defineStore("userStore", {
                     this.user.firstName = data.firstname ?? "";
                     this.user.lastName = data.lastname ?? "";
                     this.user.email = data.email ?? "";
-                    this.user.birthDate = data.birthdate ?? ""; // ✅ API: birthdate
+                    this.user.birthDate = data.birthdate ?? "";
+                    this.user.bookings = data.bookings ?? []
 
-                    this.userDataLoaded = true;
                     return this.user;
                 })
                 .catch((error) => {
-                    console.error("Fehler:", error);
+                    console.error("FetchUserData Fehler:", error);
                     this.userError = "Userdaten konnten nicht geladen werden";
                     throw error;
                 })
@@ -182,11 +148,7 @@ export const useUserStore = defineStore("userStore", {
             localStorage.removeItem("token");
             localStorage.removeItem("userId");
 
-            this.isRegistrationSuccessful = false;
-            this.errorMessage = null;
             this.userError = null;
-
-            this.userDataLoaded = false;
             this.userDataLoading = false;
 
             this.user = {
@@ -195,7 +157,7 @@ export const useUserStore = defineStore("userStore", {
                 email: "",
                 birthDate: "",
             };
-            console.log("Logout successful: " + this.user)
+            console.log("Logout successful: ", this.user)
         },
     },
 });

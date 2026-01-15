@@ -1,7 +1,16 @@
 <script setup>
 import {RouterLink, RouterView} from 'vue-router'
-import NavBar from "@/components/NavBar.vue";
-import RoomListComponent from "@/components/room/RoomListComponent.vue";
+import {useUserStore} from "@/stores/userStore";
+import {onMounted} from "vue";
+
+
+const userStore = useUserStore();
+
+onMounted(() => {
+  if (userStore.token && !userStore.hasUserData) {
+    userStore.fetchUserData().catch(() => {});
+  }
+});
 </script>
 
 <template>

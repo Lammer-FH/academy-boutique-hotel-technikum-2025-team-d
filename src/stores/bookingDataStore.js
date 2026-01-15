@@ -77,8 +77,8 @@ export const useBookingDataStore = defineStore('bookingDataStore', {
             this.save()
         },
         reset() {
-            this.$reset()
             localStorage.removeItem('bookingData')
+            this.$reset()
         },
         save() {
             localStorage.setItem('bookingData', JSON.stringify(this.$state))
