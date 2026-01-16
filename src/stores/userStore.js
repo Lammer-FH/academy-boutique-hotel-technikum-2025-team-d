@@ -144,7 +144,6 @@ export const useUserStore = defineStore("userStore", {
                     console.error("getBookings Fehler:", error);
                     throw error;
                 })
-
         },
 
         logout() {
@@ -162,6 +161,7 @@ export const useUserStore = defineStore("userStore", {
                 lastName: "",
                 email: "",
                 birthDate: "",
+                bookings: []
             };
             console.log("Logout successful: ", this.user)
         },

@@ -87,7 +87,7 @@ export default {
 
             <div v-else class="d-flex align-items-center">
             <span class="user-greeting">
-              Hallo {{userGreeting}}
+              Hallo, {{userGreeting}}
             </span>
               <b-button @click="logout" class="login-logout-btn">
                 Logout

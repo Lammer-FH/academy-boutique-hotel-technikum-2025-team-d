@@ -40,8 +40,6 @@ export default {
     onBookingSuccess() {
       this.bookingSuccess = true
       this.bookingError = null
-
-
     },
 
     onBookingError(error) {
