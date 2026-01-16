@@ -39,9 +39,6 @@ export default {
 </script>
 
 <template>
-  <!--
-  <pre>{{ bookingData }}</pre>
-  -->
   <b-row>
     <b-col cols="12" md="6">
       <div align="left">

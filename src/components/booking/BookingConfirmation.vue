@@ -31,10 +31,6 @@ export default {
     if (!roomStore.roomsList.length) {
       roomStore.loadState()
     }
-    // Wenn eine bookingId vorhanden ist, Buchung als erfolgreich markieren
-    /* if (bookingData.bookingId) {
-      this.bookingSuccess = true;
-    } */
   },
   methods: {
     onBookingSuccess() {

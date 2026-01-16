@@ -301,7 +301,6 @@ export default {
 </template>
 
 <style scoped>
-
 .cta-button {
   background-color: #2d4739 !important;
   color: #f5f5dc !important;
@@ -313,6 +312,4 @@ export default {
   background-color: #6A947D !important;
   color: #f5f5dc !important;
 }
-
-
 </style>

@@ -1,5 +1,5 @@
-import { defineStore } from "pinia";
-import api from "@/services/api";
+import {defineStore} from "pinia";
+import api from "@/services/apiService";
 
 export const useUserStore = defineStore("userStore", {
     state: () => ({
@@ -30,7 +30,6 @@ export const useUserStore = defineStore("userStore", {
     },
 
     actions: {
-
         postRegistration(firstName, lastName, email, userName, password) {
             return api
                 .post(
@@ -42,7 +41,7 @@ export const useUserStore = defineStore("userStore", {
                         username: userName,
                         password: password,
                     },
-                    { headers: { "Content-Type": "application/json", Accept: "application/json" } }
+                    {headers: {"Content-Type": "application/json", Accept: "application/json"}}
                 )
                 .then((response) => {
                     const data = response.data?.toString().trim() ?? "";
@@ -68,7 +67,7 @@ export const useUserStore = defineStore("userStore", {
                         clientId: email,
                         secret: password,
                     },
-                    { headers: { "Content-Type": "application/json", Accept: "application/json" } }
+                    {headers: {"Content-Type": "application/json", Accept: "application/json"}}
                 )
                 .then((response) => {
                     const rawData = response.data?.toString().trim() ?? "";
@@ -98,7 +97,6 @@ export const useUserStore = defineStore("userStore", {
                     throw error;
                 });
         },
-
         fetchUserData() {
 
             if (!this.token) {
@@ -132,7 +130,7 @@ export const useUserStore = defineStore("userStore", {
                 .finally(() => {
                     this.userDataLoading = false;
                 });
-        },getBookings() {
+        }, getBookings() {
             return api
                 .get("/user/bookings")
                 .then((response) => {
@@ -145,7 +143,6 @@ export const useUserStore = defineStore("userStore", {
                     throw error;
                 })
         },
-
         logout() {
             this.token = null;
             this.userId = null;

@@ -1,7 +1,6 @@
 import {defineStore} from 'pinia'
-import api from "@/services/api";
+import api from "@/services/apiService";
 import {useUserStore} from "@/stores/userStore";
-
 
 export const useBookingStore = defineStore('BookingStore', {
     state: () => ({
@@ -30,8 +29,6 @@ export const useBookingStore = defineStore('BookingStore', {
                     }
 
                     return this.bookingId
-
-
                 })
                 .catch(error => {
                     console.error('Fehler:', error);

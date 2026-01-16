@@ -136,7 +136,7 @@ Example Result (reiner Text)
 `https://boutique-hotel.helmuth-lammer.at/api/v1/user/`
 
 Authentication token mit übertragen:
-api/use
+apiService/use
 ```
     Authorization: Bearer {token}
     Accept: Application/json

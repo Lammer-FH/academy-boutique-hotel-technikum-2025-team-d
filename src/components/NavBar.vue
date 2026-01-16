@@ -5,7 +5,10 @@ import {
   BNavbarToggle,
   BCollapse,
   BNavbarNav,
-  BButton
+  BButton,
+  BNavItem,
+  BNavText,
+  BAlert
 } from 'bootstrap-vue-3';
 import {useUserStore} from "@/stores/userStore";
 
@@ -17,7 +20,10 @@ export default {
     BNavbarToggle,
     BCollapse,
     BNavbarNav,
-    BButton
+    BButton,
+    BNavItem,
+    BNavText,
+    BAlert
   },
 
   data() {
@@ -52,6 +58,7 @@ export default {
 </script>
 
 <template>
+
   <div>
 
     <b-alert
@@ -98,6 +105,7 @@ export default {
       </b-collapse>
     </b-navbar>
   </div>
+
 </template>
 
 <style scoped>
@@ -159,4 +167,5 @@ export default {
   min-width: 300px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
+
 </style>

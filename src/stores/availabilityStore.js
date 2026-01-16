@@ -1,8 +1,5 @@
 import {defineStore} from 'pinia'
-import api from "@/services/api";
-
-
-
+import api from "@/services/apiService";
 
 export const useAvailabilityStore = defineStore('RoomAvailabilityStore', {
     state: () => ({

@@ -1,9 +1,6 @@
 import {defineStore} from 'pinia'
 import {roomLocalData} from "@/components/room/roomLocalData";
-import api from "@/services/api";
-
-
-const apiUrl = "https://boutique-hotel.helmuth-lammer.at/api/v1"
+import api from "@/services/apiService";
 
 export const useRoomStore = defineStore('RoomStore', {
     state: () => ({
