@@ -12,6 +12,7 @@ import {
 
 import {useBookingDataStore} from "@/stores/bookingDataStore";
 import {useUserStore} from "@/stores/userStore";
+import {useFormFieldsStore} from "@/stores/formFieldsStore";
 
 export default {
   name: "BookingForm",
@@ -62,14 +63,14 @@ export default {
       this.form.birthdate = birthDate;
     }
 
-    },
+  },
   methods: {
     saveDataOnReload(key, value) {
       localStorage.setItem(key, value);
       this.form[key] = value;
     },
 
-    updateBookingDataStore(){
+    updateBookingDataStore() {
       this.bookingData.setFirstName(this.form.firstname);
       this.bookingData.setLastName(this.form.lastname);
       this.bookingData.setBreakfast(this.form.breakfast);
@@ -119,7 +120,7 @@ export default {
       }
 
       this.updateBookingDataStore()
-      this.$router.push({ path: `/booking/confirmation` })
+      this.$router.push({path: `/booking/confirmation`})
 
     },
   },
@@ -166,9 +167,28 @@ export default {
         return `${this.form.birthYear}-${String(this.form.birthMonth).padStart(2, '0')}-${String(this.form.birthDay).padStart(2, '0')}`;
       }
       return '';
+    },
+    formReset() {
+      return useFormFieldsStore().resetMoment
+    }
+  },
+  watch: {
+    formReset(newValue, oldValue) {
+      if (newValue !== oldValue) {
+        this.form = {
+          email: '',
+          confirmemail: '',
+          firstname: '',
+          lastname: '',
+          birthdate: '',
+          birthDay: null,
+          birthMonth: null,
+          birthYear: null,
+          breakfast: null,
+        }
+      }
     }
   }
-
 }
 </script>
 

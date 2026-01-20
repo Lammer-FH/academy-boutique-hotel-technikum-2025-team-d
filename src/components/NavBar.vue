@@ -12,6 +12,7 @@ import {
 } from 'bootstrap-vue-3';
 import {useUserStore} from "@/stores/userStore";
 import HomeView from "@/views/HomeView.vue";
+import {useFormFieldsStore} from "@/stores/formFieldsStore";
 
 export default {
   name: "NavBar",
@@ -25,8 +26,7 @@ export default {
     BButton,
     BNavItem,
     BNavText,
-    BAlert,
-    HomeView
+    BAlert
   },
 
   data() {
@@ -50,6 +50,7 @@ export default {
   },
 
   methods: {
+    useFormFieldsStore,
     logout() {
       this.userData.logout()
       this.showLogoutSuccess = true
@@ -89,7 +90,7 @@ export default {
           </b-link>
 
           <b-link href="#">
-            <router-link  to="/rooms" class="nav-link-custom">Zimmer buchen</router-link>
+            <router-link  to="/rooms" @click=useFormFieldsStore().resetFields() class="nav-link-custom">Zimmer buchen</router-link>
           </b-link>
 
         </b-navbar-nav>
@@ -99,7 +100,6 @@ export default {
           <div v-if="!isLoggedIn" class="d-flex align-items-center">
           <router-link
               to="/login"
-              @click=HomeView.resetLocalStore
               class="login-logout-btn btn">
             Login
           </router-link>

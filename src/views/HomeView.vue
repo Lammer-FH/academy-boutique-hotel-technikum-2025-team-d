@@ -5,6 +5,7 @@ import CarouselV2 from "@/components/base/CarouselV2.vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {faHouse} from "@fortawesome/free-solid-svg-icons";
 import {useBookingDataStore} from "@/stores/bookingDataStore";
+import {useFormFieldsStore} from "@/stores/formFieldsStore";
 
 
 export default {
@@ -33,10 +34,7 @@ export default {
 
     resetLocalStore(){
 
-      const keysToRemove = ['firstname', 'lastname', 'email', 'confirmemail', 'breakfast', 'birthDay', 'birthMonth', 'birthYear']
-      keysToRemove.forEach(key => localStorage.removeItem(key))
-
-      this.bookingData.reset()
+      useFormFieldsStore().resetFields()
     }
   },
 
