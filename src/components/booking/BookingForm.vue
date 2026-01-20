@@ -313,6 +313,10 @@ export default {
                         :value="false">Nein
           </b-form-radio>
         </div>
+        <p v-if="!userData.isLoggedIn" class="login-hint mt-3 mb-0">
+          Sie haben bereits ein Konto oder möchten sich registrieren?
+          <router-link to="/login" class="login-hint-link">Jetzt Anmelden</router-link>
+        </p>
       </b-form-group>
 
       <b-button class="cta-button" type="submit" variant="primary">Buchungsdaten überprüfen</b-button>
@@ -331,5 +335,15 @@ export default {
 .cta-button:hover {
   background-color: #6A947D !important;
   color: #f5f5dc !important;
+}
+
+.login-hint {
+  font-size: 0.95rem;
+}
+
+.login-hint-link {
+  margin-left: 0.25rem;
+  font-weight: 600;
+  text-decoration: underline;
 }
 </style>
