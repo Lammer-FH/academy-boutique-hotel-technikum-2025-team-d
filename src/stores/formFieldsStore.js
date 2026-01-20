@@ -16,7 +16,7 @@ export const useFormFieldsStore = defineStore('FormFieldsStore', {
     actions: {
 
         resetFields() {
-            //todo: brauchen wir dise 6 Zeileen wirklich?
+
             const keysToRemove = ['firstname', 'lastname', 'email', 'confirmemail', 'breakfast', 'birthDay', 'birthMonth', 'birthYear']
             keysToRemove.forEach(key => {
                 localStorage.removeItem(key)

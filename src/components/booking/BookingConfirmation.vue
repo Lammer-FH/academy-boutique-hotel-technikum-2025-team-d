@@ -103,9 +103,6 @@ export default {
       <RoomCardComponent v-if="room" :room="room" :show-button="false"/>
     </b-col>
   </b-row>
-  <!-- Button Buchungshistorie
-  <b-button class="cta-button" v-if="bookingSuccess">Zu meinen Buchungen</b-button>
-  -->
 
   <!--Anfahrt und Kontakt-->
   <div v-if="bookingSuccess">
