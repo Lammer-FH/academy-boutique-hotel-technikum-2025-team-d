@@ -8,13 +8,15 @@ import {
   BButton,
   BNavItem,
   BNavText,
-  BAlert
+  BAlert, BLink
 } from 'bootstrap-vue-3';
 import {useUserStore} from "@/stores/userStore";
+import HomeView from "@/views/HomeView.vue";
 
 export default {
   name: "NavBar",
   components: {
+    BLink,
     BNavbar,
     BNavbarBrand,
     BNavbarToggle,
@@ -23,7 +25,8 @@ export default {
     BButton,
     BNavItem,
     BNavText,
-    BAlert
+    BAlert,
+    HomeView
   },
 
   data() {
@@ -34,6 +37,9 @@ export default {
   },
 
   computed: {
+    HomeView() {
+      return HomeView
+    },
     isLoggedIn() {
       return this.userData.isLoggedIn
     },
@@ -81,16 +87,23 @@ export default {
           <b-link href="#">
             <router-link  to="/about" class="nav-link-custom">Über Uns</router-link>
           </b-link>
+
+          <b-link href="#">
+            <router-link  to="/rooms" class="nav-link-custom">Zimmer buchen</router-link>
+          </b-link>
+
         </b-navbar-nav>
 
         <b-navbar-nav class="ms-auto">
 
+          <div v-if="!isLoggedIn" class="d-flex align-items-center">
           <router-link
-              v-if="!isLoggedIn"
               to="/login"
+              @click=HomeView.resetLocalStore
               class="login-logout-btn btn">
             Login
           </router-link>
+          </div>
 
             <div v-else class="d-flex align-items-center">
             <span class="user-greeting">

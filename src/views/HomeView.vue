@@ -1,6 +1,6 @@
 <script>
 import DefaultLayout from "@/components/base/DefaultLayout.vue";
-import {BButton} from "bootstrap-vue-3";
+import {BButton, BContainer} from "bootstrap-vue-3";
 import CarouselV2 from "@/components/base/CarouselV2.vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {faHouse} from "@fortawesome/free-solid-svg-icons";
@@ -9,7 +9,7 @@ import {useBookingDataStore} from "@/stores/bookingDataStore";
 
 export default {
 
-  components: {FontAwesomeIcon, CarouselV2, BButton, DefaultLayout},
+  components: {BContainer, FontAwesomeIcon, CarouselV2, BButton, DefaultLayout},
   data() {
     return {
       bookingData: useBookingDataStore(),
